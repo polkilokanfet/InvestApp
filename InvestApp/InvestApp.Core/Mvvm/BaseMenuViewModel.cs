@@ -1,4 +1,7 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
+using InvestApp.Core.ApplicationCommands;
+using Prism.Commands;
 using Prism.Mvvm;
 
 namespace InvestApp.Core.Mvvm
@@ -12,9 +15,18 @@ namespace InvestApp.Core.Mvvm
             set => SetProperty(ref _items, value);
         }
 
-        protected BaseMenuViewModel()
+        public DelegateCommand<INavigationItem> SelectedCommand { get; }
+
+        protected BaseMenuViewModel(IApplicationCommands applicationCommands)
         {
             Items = new ObservableCollection<NavigationItem>();
+            
+            SelectedCommand = new DelegateCommand<INavigationItem>(
+                (navigationItem) =>
+                {
+                    applicationCommands.NavigateCommand.Execute(navigationItem.NavigationUri);
+                });
+
             GenerateMenu();
         }
 

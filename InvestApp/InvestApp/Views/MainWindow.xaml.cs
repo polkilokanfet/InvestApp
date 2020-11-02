@@ -1,12 +1,16 @@
 ﻿using Infragistics.Windows.OutlookBar.Events;
+using InvestApp.Core.ApplicationCommands;
 using InvestApp.Core.Mvvm;
 
 namespace InvestApp.Views
 {
     public partial class MainWindow
     {
-        public MainWindow()
+        private readonly IApplicationCommands _applicationCommands;
+
+        public MainWindow(IApplicationCommands applicationCommands)
         {
+            _applicationCommands = applicationCommands;
             InitializeComponent();
         }
 
@@ -14,7 +18,7 @@ namespace InvestApp.Views
         {
             if (e.NewSelectedOutlookBarGroup is IOutlookBarGroup selectedOutlookBarGroup)
             {
-                Commands.NavigateCommand.Execute(selectedOutlookBarGroup.DefaultViewUri);
+                _applicationCommands.NavigateCommand.Execute(selectedOutlookBarGroup.DefaultViewUri);
             }
         }
 

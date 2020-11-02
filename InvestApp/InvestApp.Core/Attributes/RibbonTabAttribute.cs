@@ -1,22 +1,12 @@
 ﻿using System;
-using InvestApp.Core.Mvvm;
 
 namespace InvestApp.Core.Attributes
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public class RibbonTabAttribute : Attribute
+    public class RibbonTabAttribute : DependentViewAttribute
     {
-        public Type RibbonTabType { get; }
-
-        public RibbonTabAttribute(Type ribbonTabType)
+        public RibbonTabAttribute(Type ribbonTabType) : base(RegionNames.RibbonTabRegion, ribbonTabType)
         {
-            if (ribbonTabType == null) 
-                throw new ArgumentNullException(nameof(ribbonTabType));
-
-            if (ribbonTabType.BaseType != typeof(RibbonTabItemWithViewModel)) 
-                throw new ArgumentOutOfRangeException(nameof(ribbonTabType));
-
-            RibbonTabType = ribbonTabType;
         }
     }
 }

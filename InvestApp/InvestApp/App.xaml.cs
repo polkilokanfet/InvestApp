@@ -4,8 +4,10 @@ using System.Windows;
 using Infragistics.Windows.OutlookBar;
 using Infragistics.Windows.Ribbon;
 using InvesApp.Services.Tinkoff;
+using InvestApp.Core.ApplicationCommands;
 using InvestApp.Core.Behaviors;
-using InvestApp.Core.RegionAdapters;
+using InvestApp.Core.Region;
+using InvestApp.Core.Region.RegionAdapters;
 using Prism.Modularity;
 using InvestApp.Modules.ModuleName;
 using InvestApp.Services.Interfaces;
@@ -26,6 +28,7 @@ namespace InvestApp
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterSingleton<IApplicationCommands, ApplicationCommands>();
             containerRegistry.RegisterSingleton<IRepository, TinkoffRepository>();
         }
 
@@ -44,7 +47,7 @@ namespace InvestApp
         protected override void ConfigureDefaultRegionBehaviors(IRegionBehaviorFactory regionBehaviors)
         {
             base.ConfigureDefaultRegionBehaviors(regionBehaviors);
-            regionBehaviors.AddIfMissing(XamRibbonRegionBehavior.BehaviorKey, typeof(XamRibbonRegionBehavior));
+            regionBehaviors.AddIfMissing(DependentViewRegionBehavior.BehaviorKey, typeof(DependentViewRegionBehavior));
         }
     }
 }

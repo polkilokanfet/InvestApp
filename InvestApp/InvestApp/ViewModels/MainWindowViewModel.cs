@@ -1,6 +1,6 @@
 ﻿using System;
 using InvestApp.Core;
-using InvestApp.Core.Mvvm;
+using InvestApp.Core.ApplicationCommands;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -16,9 +16,9 @@ namespace InvestApp.ViewModels
             set => SetProperty(ref _title, value);
         }
 
-        public MainWindowViewModel(IRegionManager regionManager)
+        public MainWindowViewModel(IRegionManager regionManager, IApplicationCommands applicationCommands)
         {
-            Commands.NavigateCommand.RegisterCommand(new DelegateCommand<Uri>(
+            applicationCommands.NavigateCommand.RegisterCommand(new DelegateCommand<Uri>(
                 (uri) =>
                 {
                     if (uri != null)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using InvestApp.Core.Mvvm;
 
@@ -11,6 +12,21 @@ namespace InvestApp.Modules.ModuleName.Menus
         {
             InitializeComponent();
             this.DataContext = viewModel;
+            XamDataTree.Loaded += XamDataTreeOnLoaded;
+        }
+
+        private void XamDataTreeOnLoaded(object sender, RoutedEventArgs e)
+        {
+            XamDataTree.Loaded -= XamDataTreeOnLoaded;
+            if (XamDataTree.Nodes.Any())
+            {
+                XamDataTree.ActiveNode = XamDataTree.Nodes.First();
+                XamDataTree.Nodes.First().IsSelected = true;
+
+                //var parentNode = XamDataTree.Nodes[0];
+                //var nodeToSelect = parentNode.Nodes[0];
+                //nodeToSelect.IsSelected = true;
+            }
         }
 
         public Uri DefaultViewUri

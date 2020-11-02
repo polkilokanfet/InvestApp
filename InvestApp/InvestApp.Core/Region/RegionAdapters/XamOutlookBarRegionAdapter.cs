@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 using Infragistics.Windows.OutlookBar;
 using Prism.Regions;
 
-namespace InvestApp.Core.RegionAdapters
+namespace InvestApp.Core.Region.RegionAdapters
 {
     public class XamOutlookBarRegionAdapter : RegionAdapterBase<XamOutlookBar>
     {

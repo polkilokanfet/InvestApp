@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 using Infragistics.Windows.Ribbon;
 using Prism.Regions;
 
-namespace InvestApp.Core.RegionAdapters
+namespace InvestApp.Core.Region.RegionAdapters
 {
     public class XamRibbonRegionAdapter : RegionAdapterBase<XamRibbon>
     {
@@ -22,9 +22,9 @@ namespace InvestApp.Core.RegionAdapters
                 {
                     case NotifyCollectionChangedAction.Add:
                     {
-                        foreach (object view in args.NewItems)
+                        foreach (object newView in args.NewItems)
                         {
-                            if (view is RibbonTabItem ribbonTabItem)
+                            if (newView is RibbonTabItem ribbonTabItem)
                             {
                                 regionTarget.Tabs.Add(ribbonTabItem);
                             }
@@ -33,13 +33,12 @@ namespace InvestApp.Core.RegionAdapters
                     }
                     case NotifyCollectionChangedAction.Remove:
                     {
-                        foreach (object view in args.OldItems)
+                        foreach (object oldView in args.OldItems)
                         {
-                            if (view is RibbonTabItem ribbonTabItem)
+                            if (oldView is RibbonTabItem ribbonTabItem)
                             {
                                 regionTarget.Tabs.Remove(ribbonTabItem);
                             }
-
                         }
                         break;
                     }

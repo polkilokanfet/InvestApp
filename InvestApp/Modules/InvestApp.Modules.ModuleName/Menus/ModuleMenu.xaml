@@ -2,13 +2,21 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:ig="http://infragistics.com/OutlookBar" 
                     xmlns:igs="http://schemas.infragistics.com/xaml"
-                    xmlns:mvvm="clr-namespace:InvestApp.Core.Mvvm;assembly=InvestApp.Core"
+                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                    xmlns:prism="http://prismlibrary.com/"
                     x:Class="InvestApp.Modules.ModuleName.Menus.ModuleMenu"
                     Header="Продажи">
 
     <igs:XamDataTree x:Name="XamDataTree"
-                     ItemsSource="{Binding Items}"
-                     mvvm:XamDataTreeItemSelected.Command="{x:Static Member=mvvm:Commands.NavigateCommand}">
+                     ItemsSource="{Binding Items}">
+        <!--mvvm:XamDataTreeItemSelected.Command="{x:Static Member=applicationCommands:ApplicationCommands.NavigateCommand}">-->
+
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="ActiveNodeChanged">
+                <prism:InvokeCommandAction Command="{Binding SelectedCommand}" TriggerParameterPath="NewActiveTreeNode.Data" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+
         <igs:XamDataTree.GlobalNodeLayouts>
             <igs:NodeLayout Key="ItemsLayout"
                             TargetTypeName="NavigationItem" 
