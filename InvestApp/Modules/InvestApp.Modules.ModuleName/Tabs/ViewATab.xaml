@@ -1,0 +1,14 @@
+﻿<mvvm:RibbonTabItemWithViewModel
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:infRib="http://infragistics.com/Ribbon" 
+             xmlns:mvvm="clr-namespace:InvestApp.Core.Mvvm;assembly=InvestApp.Core"
+             x:Class="InvestApp.Modules.ModuleName.Tabs.ViewATab"
+             Header="Действия">
+
+    <infRib:RibbonGroup Caption="Проекты">
+        <infRib:ButtonTool Caption="Загрузить" Command="{Binding LoadCommand}"/>
+        <!--<infRib:ButtonTool Caption="Изменить" Command="{Binding EditProjectCommand}" SmallImage="/HVTApp.UI;component/Images/edit.png"/>-->
+    </infRib:RibbonGroup>
+
+</mvvm:RibbonTabItemWithViewModel>

@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>InvestApp.Modules.ModuleName</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\InvestApp.Services.Interfaces\InvestApp.Services.Interfaces.csproj" />
+    <ProjectReference Include="..\..\InvestApp.Core\InvestApp.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="InfragisticsWPF4.Controls.Menus.XamDataTree.v15.1">
+      <HintPath>..\..\..\..\..\RepoTest\HVTApp\packages\Infragistics.WPF.15.1.20151.1000\lib\net40\InfragisticsWPF4.Controls.Menus.XamDataTree.v15.1.dll</HintPath>
+    </Reference>
+    <Reference Include="InfragisticsWPF4.DataManager.v15.1">
+      <HintPath>..\..\..\..\..\RepoTest\HVTApp\packages\Infragistics.WPF.15.1.20151.1000\lib\net40\InfragisticsWPF4.DataManager.v15.1.dll</HintPath>
+    </Reference>
+    <Reference Include="InfragisticsWPF4.OutlookBar.v15.1">
+      <HintPath>..\..\..\..\..\RepoTest\HVTApp\packages\Infragistics.WPF.15.1.20151.1000\lib\net40\InfragisticsWPF4.OutlookBar.v15.1.dll</HintPath>
+    </Reference>
+    <Reference Include="InfragisticsWPF4.Ribbon.v15.1">
+      <HintPath>..\..\..\..\..\RepoTest\HVTApp\packages\Infragistics.WPF.15.1.20151.1000\lib\net40\InfragisticsWPF4.Ribbon.v15.1.dll</HintPath>
+    </Reference>
+    <Reference Include="InfragisticsWPF4.v15.1">
+      <HintPath>..\..\..\..\..\RepoTest\HVTApp\packages\Infragistics.WPF.15.1.20151.1000\lib\net40\InfragisticsWPF4.v15.1.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

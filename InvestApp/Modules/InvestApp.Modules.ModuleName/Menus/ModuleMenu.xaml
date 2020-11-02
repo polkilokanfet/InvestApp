@@ -1,0 +1,20 @@
+﻿<ig:OutlookBarGroup xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ig="http://infragistics.com/OutlookBar" 
+                    xmlns:igs="http://schemas.infragistics.com/xaml"
+                    xmlns:mvvm="clr-namespace:InvestApp.Core.Mvvm;assembly=InvestApp.Core"
+                    x:Class="InvestApp.Modules.ModuleName.Menus.ModuleMenu"
+                    Header="Продажи">
+
+    <igs:XamDataTree x:Name="XamDataTree"
+                     ItemsSource="{Binding Items}"
+                     mvvm:XamDataTreeItemSelected.Command="{x:Static Member=mvvm:Commands.NavigateCommand}">
+        <igs:XamDataTree.GlobalNodeLayouts>
+            <igs:NodeLayout Key="ItemsLayout"
+                            TargetTypeName="NavigationItem" 
+                            DisplayMemberPath="Caption" 
+                            IsExpandedMemberPath="IsExpended"/>
+        </igs:XamDataTree.GlobalNodeLayouts>
+    </igs:XamDataTree>
+
+</ig:OutlookBarGroup>
