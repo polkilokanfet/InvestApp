@@ -21,11 +21,11 @@ namespace InvestApp.Modules.ModuleName.ViewModels
             set => SetProperty(ref _message, value);
         }
 
-        public ObservableCollection<Operation> Collection { get; } = new ObservableCollection<Operation>();
+        public ObservableCollection<StockListItem> Collection { get; } = new ObservableCollection<StockListItem>();
 
         public ICommand LoadCommand { get; }
 
-        public ViewAViewModel(IRegionManager regionManager, IRepository repository, IMajorIndexService majorIndexService, IStockPriceService stockPriceService) : base(regionManager)
+        public ViewAViewModel(IRegionManager regionManager, IRepository repository, IMajorIndexService majorIndexService, IStockPriceService stockPriceService, IStockListService stockListService) : base(regionManager)
         {
             _repository = repository;
             _majorIndexService = majorIndexService;
@@ -33,8 +33,10 @@ namespace InvestApp.Modules.ModuleName.ViewModels
             LoadCommand = new DelegateCommand(
                 async () =>
                 {
-                    var price = await stockPriceService.GetPrice("AAPL");
-                    var indx = await _majorIndexService.GetMajorIndex(MajorIndexType.DowJones);
+                    var list = await stockListService.GetStockList();
+                    Collection.AddRange(list);
+                    //var price = await stockPriceService.GetPrice("VOO");
+                    //var indx = await _majorIndexService.GetMajorIndex(MajorIndexType.DowJones);
                     //Collection.Clear();
                     //Collection.AddRange(await _repository.GetOperationsAsync());
                 });

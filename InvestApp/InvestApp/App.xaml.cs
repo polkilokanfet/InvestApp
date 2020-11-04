@@ -29,6 +29,7 @@ namespace InvestApp
         {
             containerRegistry.RegisterSingleton<IApplicationCommands, ApplicationCommands>();
             containerRegistry.RegisterSingleton<IRepository, TinkoffRepository>();
+            containerRegistry.RegisterSingleton<IStockListService, StockListService>();
             containerRegistry.RegisterSingleton<IStockPriceService, StockPriceService>();
             containerRegistry.RegisterSingleton<IMajorIndexService, MajorIndexService>();
             containerRegistry.RegisterInstance(typeof(FinancialModelingPrepHttpClientFactory), new FinancialModelingPrepHttpClientFactory("54f54a0a0365d2cc288f3c5b02e709b5"));
