@@ -4,20 +4,10 @@ using System.Linq;
 using System.Reflection;
 using InvestApp.Infrastructure.Attributes;
 
-namespace InvestApp.Infrastructure.Extansions
+namespace InvestApp.Models.Extansions
 {
     public static class CommonExtansions
     {
-        /// <summary>
-        /// Вернуть атрибуты определенного типа.
-        /// </summary>
-        /// <typeparam name="T">Тип атрибута</typeparam>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        public static IEnumerable<T> GetCustomAttributes<T>(this Type type)
-        {
-            return type.GetCustomAttributes(typeof(T), true).OfType<T>();
-        }
 
         #region IsType
 
@@ -225,6 +215,5 @@ namespace InvestApp.Infrastructure.Extansions
             var attr = property.GetCustomAttribute<OrderStatusAttribute>();
             return attr?.OrderStatus ?? 1;
         }
-
     }
 }

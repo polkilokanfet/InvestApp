@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using InvestApp.Models.Base;
 
-namespace InvestApp.Models
+namespace InvestApp.Models.Models
 {
-    public class Operation
+    public class Operation : BaseEntity
     {
-        public string Id { get; set; }
+        /// <summary>
+        /// Id in Tinkoff Api
+        /// </summary>
+        public string IdTcs { get; set; }
         public OperationStatus Status { get; set; }
         public List<Trade> Trades { get; set; }
         public MoneyAmount Commission { get; set; }

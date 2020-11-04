@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using InvestApp.Services.Interfaces;
 using Tinkoff.Trading.OpenApi.Models;
 using Tinkoff.Trading.OpenApi.Network;
-using InstrumentType = InvestApp.Models.InstrumentType;
-using Operation = InvestApp.Models.Operation;
+using InstrumentType = InvestApp.Models.Models.InstrumentType;
+using Operation = InvestApp.Models.Models.Operation;
 
 namespace InvesApp.Services.Tinkoff
 {

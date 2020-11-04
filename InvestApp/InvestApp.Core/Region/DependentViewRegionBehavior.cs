@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Windows;
+using InvestApp.Infrastructure.Attributes;
 using Prism.Regions;
 using InvestApp.Infrastructure.Extansions;
 using Prism.Ioc;

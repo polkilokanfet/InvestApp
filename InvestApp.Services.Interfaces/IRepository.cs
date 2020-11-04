@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using InvestApp.Models;
+using InvestApp.Models.Models;
 
 namespace InvestApp.Services.Interfaces
 {

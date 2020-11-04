@@ -1,4 +1,5 @@
 ﻿using System;
+using InvestApp.Infrastructure.Attributes;
 
 namespace InvestApp.Core.Attributes
 {

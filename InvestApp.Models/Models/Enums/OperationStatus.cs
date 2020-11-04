@@ -1,4 +1,4 @@
-﻿namespace InvestApp.Models
+﻿namespace InvestApp.Models.Models
 {
     public enum OperationStatus
     {
