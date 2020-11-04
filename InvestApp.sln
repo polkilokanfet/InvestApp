@@ -23,9 +23,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvestApp.Models", "InvestA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvesApp.Services.Tinkoff", "InvesApp.Services.Tinkoff\InvesApp.Services.Tinkoff.csproj", "{2341F43C-8029-4CE9-96EB-3B25A519F747}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvestApp.Services.Interfaces", "InvestApp.Services.Interfaces\InvestApp.Services.Interfaces.csproj", "{2ADA0DDC-3936-4870-A75E-AEA69C64F7A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvestApp.Services.Interfaces", "InvestApp.Services.Interfaces\InvestApp.Services.Interfaces.csproj", "{2ADA0DDC-3936-4870-A75E-AEA69C64F7A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvestApp.Infrastructure", "InvestApp.Infrastructure\InvestApp.Infrastructure.csproj", "{B43604A0-0E29-44F8-800A-BDCFB3943910}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvestApp.Infrastructure", "InvestApp.Infrastructure\InvestApp.Infrastructure.csproj", "{B43604A0-0E29-44F8-800A-BDCFB3943910}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvestApp.Services.FinancialModelingPrepService", "InvestApp.Services.FinancialModelingPrepService\InvestApp.Services.FinancialModelingPrepService.csproj", "{4628B656-8E5B-4984-9606-94C46FB93FE8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{B43604A0-0E29-44F8-800A-BDCFB3943910}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B43604A0-0E29-44F8-800A-BDCFB3943910}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B43604A0-0E29-44F8-800A-BDCFB3943910}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4628B656-8E5B-4984-9606-94C46FB93FE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4628B656-8E5B-4984-9606-94C46FB93FE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4628B656-8E5B-4984-9606-94C46FB93FE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4628B656-8E5B-4984-9606-94C46FB93FE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,6 +85,7 @@ Global
 		{F2948D95-F2E2-4836-9E94-5CBB1D0FBCA3} = {AD3435EA-009B-47B7-AFA7-D1913014C034}
 		{2341F43C-8029-4CE9-96EB-3B25A519F747} = {AD3435EA-009B-47B7-AFA7-D1913014C034}
 		{2ADA0DDC-3936-4870-A75E-AEA69C64F7A9} = {AD3435EA-009B-47B7-AFA7-D1913014C034}
+		{4628B656-8E5B-4984-9606-94C46FB93FE8} = {AD3435EA-009B-47B7-AFA7-D1913014C034}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DEDCEF72-A1A2-4E53-A5E8-9FB53926B063}

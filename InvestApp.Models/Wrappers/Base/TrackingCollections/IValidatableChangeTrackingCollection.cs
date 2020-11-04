@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using InvestApp.Infrastructure.Interfaces;
+using InvestApp.Models.Interfaces;
 
 namespace InvestApp.Models.Wrappers.Base.TrackingCollections
 {

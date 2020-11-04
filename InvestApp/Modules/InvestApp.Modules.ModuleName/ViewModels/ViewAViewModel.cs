@@ -12,6 +12,7 @@ namespace InvestApp.Modules.ModuleName.ViewModels
     public class ViewAViewModel : RegionViewModelBase
     {
         private readonly IRepository _repository;
+        private readonly IMajorIndexService _majorIndexService;
 
         private string _message;
         public string Message
@@ -24,15 +25,18 @@ namespace InvestApp.Modules.ModuleName.ViewModels
 
         public ICommand LoadCommand { get; }
 
-        public ViewAViewModel(IRegionManager regionManager, IRepository repository) : base(regionManager)
+        public ViewAViewModel(IRegionManager regionManager, IRepository repository, IMajorIndexService majorIndexService, IStockPriceService stockPriceService) : base(regionManager)
         {
             _repository = repository;
+            _majorIndexService = majorIndexService;
 
             LoadCommand = new DelegateCommand(
                 async () =>
                 {
-                    Collection.Clear();
-                    Collection.AddRange(await _repository.GetOperationsAsync());
+                    var price = await stockPriceService.GetPrice("AAPL");
+                    var indx = await _majorIndexService.GetMajorIndex(MajorIndexType.DowJones);
+                    //Collection.Clear();
+                    //Collection.AddRange(await _repository.GetOperationsAsync());
                 });
         }
 

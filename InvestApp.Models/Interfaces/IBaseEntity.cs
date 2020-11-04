@@ -1,4 +1,4 @@
-﻿namespace InvestApp.Infrastructure.Interfaces
+﻿namespace InvestApp.Models.Interfaces
 {
     public interface IBaseEntity : IHasId
     {

@@ -6,9 +6,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using HVTApp.Model.Wrapper.Base;
 using InvestApp.Infrastructure.Extansions;
-using InvestApp.Infrastructure.Interfaces;
+using InvestApp.Models.Interfaces;
 using InvestApp.Models.Wrappers.Base.TrackingCollections;
 
 namespace InvestApp.Models.Wrappers.Base

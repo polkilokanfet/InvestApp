@@ -5,13 +5,12 @@ using Infragistics.Windows.OutlookBar;
 using Infragistics.Windows.Ribbon;
 using InvesApp.Services.Tinkoff;
 using InvestApp.Core.ApplicationCommands;
-using InvestApp.Core.Behaviors;
 using InvestApp.Core.Region;
 using InvestApp.Core.Region.RegionAdapters;
 using Prism.Modularity;
 using InvestApp.Modules.ModuleName;
 using InvestApp.Services.Interfaces;
-using InvestApp.Services;
+using InvestApp.Services.FinancialModelingPrepService;
 using Prism.Regions;
 
 namespace InvestApp
@@ -30,6 +29,9 @@ namespace InvestApp
         {
             containerRegistry.RegisterSingleton<IApplicationCommands, ApplicationCommands>();
             containerRegistry.RegisterSingleton<IRepository, TinkoffRepository>();
+            containerRegistry.RegisterSingleton<IStockPriceService, StockPriceService>();
+            containerRegistry.RegisterSingleton<IMajorIndexService, MajorIndexService>();
+            containerRegistry.RegisterInstance(typeof(FinancialModelingPrepHttpClientFactory), new FinancialModelingPrepHttpClientFactory("54f54a0a0365d2cc288f3c5b02e709b5"));
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

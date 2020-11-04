@@ -1,5 +1,5 @@
 ﻿using System;
-using InvestApp.Infrastructure.Interfaces;
+using InvestApp.Models.Interfaces;
 
 namespace InvestApp.Models.Base
 {

@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
-using InvestApp.Infrastructure.Interfaces;
+using InvestApp.Models.Interfaces;
 
 namespace InvestApp.Models.Wrappers.Base.TrackingCollections
 {
