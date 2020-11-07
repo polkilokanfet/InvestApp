@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using InvestApp.Models.Base;
-using InvestApp.Models.Models;
+using InvestApp.Domain.Models;
+using InvestApp.Domain.Models.Base;
 
-namespace InvestApp.Models.Extansions
+namespace InvestApp.Domain.Extansions
 {
     public static class GeneratorHelper
     {

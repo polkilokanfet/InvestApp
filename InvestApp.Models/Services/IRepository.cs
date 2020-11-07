@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using InvestApp.Models;
-using InvestApp.Models.Models;
+using InvestApp.Domain.Models;
 
-namespace InvestApp.Services.Interfaces
+namespace InvestApp.Domain.Services
 {
     public interface IRepository
     {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using InvestApp.Models.Base;
+using InvestApp.Domain.Models.Base;
 
-namespace InvestApp.Models.Models
+namespace InvestApp.Domain.Models
 {
     public class Operation : BaseEntity
     {

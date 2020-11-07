@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace InvestApp.Models.Interfaces
+namespace InvestApp.Domain.Interfaces
 {
     public interface IHasId
     {

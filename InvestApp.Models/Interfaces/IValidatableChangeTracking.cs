@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace InvestApp.Models.Interfaces
+namespace InvestApp.Domain.Interfaces
 {
     public interface IValidatableChangeTracking : IRevertibleChangeTracking, INotifyPropertyChanged
     {

@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
-using InvestApp.Models.Models;
-using InvestApp.Models.Wrappers.Base;
-using InvestApp.Models.Wrappers.Base.TrackingCollections;
+using InvestApp.Domain.Models;
+using InvestApp.Domain.Wrappers.Base;
+using InvestApp.Domain.Wrappers.Base.TrackingCollections;
 
 namespace InvestApp.Models.Wrappers.Base
 {
@@ -14,12 +14,12 @@ namespace InvestApp.Models.Wrappers.Base
         #region SimpleProperties
 
         //Currency
-        public InvestApp.Models.Models.Currency Currency
+        public Currency Currency
         {
-          get { return GetValue<InvestApp.Models.Models.Currency>(); }
+          get { return GetValue<Currency>(); }
           set { SetValue(value); }
         }
-        public InvestApp.Models.Models.Currency CurrencyOriginalValue => GetOriginalValue<InvestApp.Models.Models.Currency>(nameof(Currency));
+        public Currency CurrencyOriginalValue => GetOriginalValue<Currency>(nameof(Currency));
         public bool CurrencyIsChanged => GetIsChanged(nameof(Currency));
 
         //Value
@@ -60,21 +60,21 @@ namespace InvestApp.Models.Wrappers.Base
         public bool IdTcsIsChanged => GetIsChanged(nameof(IdTcs));
 
         //Status
-        public InvestApp.Models.Models.OperationStatus Status
+        public OperationStatus Status
         {
-          get { return GetValue<InvestApp.Models.Models.OperationStatus>(); }
+          get { return GetValue<OperationStatus>(); }
           set { SetValue(value); }
         }
-        public InvestApp.Models.Models.OperationStatus StatusOriginalValue => GetOriginalValue<InvestApp.Models.Models.OperationStatus>(nameof(Status));
+        public OperationStatus StatusOriginalValue => GetOriginalValue<OperationStatus>(nameof(Status));
         public bool StatusIsChanged => GetIsChanged(nameof(Status));
 
         //Currency
-        public InvestApp.Models.Models.Currency Currency
+        public Currency Currency
         {
-          get { return GetValue<InvestApp.Models.Models.Currency>(); }
+          get { return GetValue<Currency>(); }
           set { SetValue(value); }
         }
-        public InvestApp.Models.Models.Currency CurrencyOriginalValue => GetOriginalValue<InvestApp.Models.Models.Currency>(nameof(Currency));
+        public Currency CurrencyOriginalValue => GetOriginalValue<Currency>(nameof(Currency));
         public bool CurrencyIsChanged => GetIsChanged(nameof(Currency));
 
         //Payment
@@ -114,12 +114,12 @@ namespace InvestApp.Models.Wrappers.Base
         public bool FigiIsChanged => GetIsChanged(nameof(Figi));
 
         //InstrumentType
-        public InvestApp.Models.Models.InstrumentType InstrumentType
+        public InstrumentType InstrumentType
         {
-          get { return GetValue<InvestApp.Models.Models.InstrumentType>(); }
+          get { return GetValue<InstrumentType>(); }
           set { SetValue(value); }
         }
-        public InvestApp.Models.Models.InstrumentType InstrumentTypeOriginalValue => GetOriginalValue<InvestApp.Models.Models.InstrumentType>(nameof(InstrumentType));
+        public InstrumentType InstrumentTypeOriginalValue => GetOriginalValue<InstrumentType>(nameof(InstrumentType));
         public bool InstrumentTypeIsChanged => GetIsChanged(nameof(InstrumentType));
 
         //IsMarginCall
@@ -141,12 +141,12 @@ namespace InvestApp.Models.Wrappers.Base
         public bool DateIsChanged => GetIsChanged(nameof(Date));
 
         //OperationType
-        public InvestApp.Models.Models.ExtendedOperationType OperationType
+        public ExtendedOperationType OperationType
         {
-          get { return GetValue<InvestApp.Models.Models.ExtendedOperationType>(); }
+          get { return GetValue<ExtendedOperationType>(); }
           set { SetValue(value); }
         }
-        public InvestApp.Models.Models.ExtendedOperationType OperationTypeOriginalValue => GetOriginalValue<InvestApp.Models.Models.ExtendedOperationType>(nameof(OperationType));
+        public ExtendedOperationType OperationTypeOriginalValue => GetOriginalValue<ExtendedOperationType>(nameof(OperationType));
         public bool OperationTypeIsChanged => GetIsChanged(nameof(OperationType));
 
         //Id

@@ -1,4 +1,4 @@
-﻿namespace InvestApp.Services.Interfaces
+﻿namespace InvestApp.Domain.Services
 {
     public interface IMessageService
     {

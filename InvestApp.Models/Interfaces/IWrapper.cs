@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace InvestApp.Models.Interfaces
+namespace InvestApp.Domain.Interfaces
 {
     public interface IWrapper<out TModel> : IValidatableChangeTracking, IValidatableObject
         where TModel : class, IBaseEntity

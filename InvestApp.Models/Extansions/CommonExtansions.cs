@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using InvestApp.Infrastructure.Attributes;
 
-namespace InvestApp.Models.Extansions
+namespace InvestApp.Domain.Extansions
 {
     public static class CommonExtansions
     {

@@ -1,7 +1,7 @@
 ﻿using System;
-using InvestApp.Models.Interfaces;
+using InvestApp.Domain.Interfaces;
 
-namespace InvestApp.Models.Base
+namespace InvestApp.Domain.Models.Base
 {
     public abstract class BaseEntity : IBaseEntity, IComparable
     {

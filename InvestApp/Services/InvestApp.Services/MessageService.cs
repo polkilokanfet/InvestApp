@@ -1,4 +1,4 @@
-﻿using InvestApp.Services.Interfaces;
+﻿using InvestApp.Domain.Services;
 
 namespace InvestApp.Services
 {

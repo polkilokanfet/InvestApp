@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using InvestApp.Services.Interfaces;
+using InvestApp.Domain.Services;
 using Tinkoff.Trading.OpenApi.Models;
 using Tinkoff.Trading.OpenApi.Network;
-using InstrumentType = InvestApp.Models.Models.InstrumentType;
-using Operation = InvestApp.Models.Models.Operation;
+using InstrumentType = InvestApp.Domain.Models.InstrumentType;
+using Operation = InvestApp.Domain.Models.Operation;
 
 namespace InvesApp.Services.Tinkoff
 {

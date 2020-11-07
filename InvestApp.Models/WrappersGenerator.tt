@@ -30,7 +30,7 @@ using System.Linq;
 using InvestApp.Models.Models;
 using InvestApp.Models.Wrappers.Base.TrackingCollections;
 
-namespace InvestApp.Models.Wrappers.Base
+namespace InvestApp.Domain.Wrappers.Base
 {
 <#+
         foreach(var modelType in modelTypes)

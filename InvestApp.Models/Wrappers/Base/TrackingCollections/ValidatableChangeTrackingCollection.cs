@@ -3,9 +3,9 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
-using InvestApp.Models.Interfaces;
+using InvestApp.Domain.Interfaces;
 
-namespace InvestApp.Models.Wrappers.Base.TrackingCollections
+namespace InvestApp.Domain.Wrappers.Base.TrackingCollections
 {
     /// <summary>
     /// Коллекция способная отслеживать изменилось ли в ней что-то.

@@ -1,7 +1,7 @@
 ﻿using System;
-using InvestApp.Models.Base;
+using InvestApp.Domain.Models.Base;
 
-namespace InvestApp.Models.Models
+namespace InvestApp.Domain.Models
 {
     public class Trade : BaseEntity
     {

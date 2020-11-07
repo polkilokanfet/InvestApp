@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace InvestApp.Models.Models
+namespace InvestApp.Domain.Models
 {
     public enum Currency
     {

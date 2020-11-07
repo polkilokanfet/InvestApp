@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace InvestApp.Models.Exceptions
+namespace InvestApp.Domain.Exceptions
 {
     public class InvalidSymbolException : Exception
     {

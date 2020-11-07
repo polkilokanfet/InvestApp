@@ -6,11 +6,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using InvestApp.Domain.Interfaces;
+using InvestApp.Domain.Wrappers.Base.TrackingCollections;
 using InvestApp.Infrastructure.Extansions;
-using InvestApp.Models.Interfaces;
-using InvestApp.Models.Wrappers.Base.TrackingCollections;
+using InvestApp.Models.Wrappers.Base;
 
-namespace InvestApp.Models.Wrappers.Base
+namespace InvestApp.Domain.Wrappers.Base
 {
     public abstract partial class WrapperBase<TModel> : NotifyDataErrorInfoBase, IWrapper<TModel>
         where TModel : class, IBaseEntity

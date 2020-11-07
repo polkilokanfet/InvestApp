@@ -12,7 +12,7 @@
     <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\InvestApp.Services.Interfaces\InvestApp.Services.Interfaces.csproj" />
+    <ProjectReference Include="..\..\..\InvestApp.Models\InvestApp.Domain.csproj" />
     <ProjectReference Include="..\..\InvestApp.Core\InvestApp.Core.csproj" />
   </ItemGroup>
 </Project>

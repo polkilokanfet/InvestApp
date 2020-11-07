@@ -1,5 +1,5 @@
-﻿using InvestApp.Modules.ModuleName.ViewModels;
-using InvestApp.Services.Interfaces;
+﻿using InvestApp.Domain.Services;
+using InvestApp.Modules.ModuleName.ViewModels;
 using Moq;
 using Prism.Regions;
 using Xunit;

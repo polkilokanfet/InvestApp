@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\InvestApp.Services.Interfaces\InvestApp.Services.Interfaces.csproj" />
+    <ProjectReference Include="..\..\..\InvestApp.Models\InvestApp.Domain.csproj" />
   </ItemGroup>
 
 </Project>

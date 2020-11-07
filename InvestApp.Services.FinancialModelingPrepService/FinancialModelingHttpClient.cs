@@ -5,11 +5,11 @@ using Newtonsoft.Json;
 
 namespace InvestApp.Services.FinancialModelingPrepService
 {
-    public class FinancialModelingPrepHttpClient : HttpClient
+    public class FinancialModelingHttpClient : HttpClient
     {
         private readonly string _apiKey;
 
-        public FinancialModelingPrepHttpClient(string apiKey)
+        public FinancialModelingHttpClient(string apiKey)
         {
             this.BaseAddress = new Uri("https://financialmodelingprep.com/api/v3/");
             _apiKey = apiKey;
@@ -19,7 +19,6 @@ namespace InvestApp.Services.FinancialModelingPrepService
         {
             HttpResponseMessage response = await GetAsync($"{uri}?apikey={_apiKey}");
             string jsonResponse = await response.Content.ReadAsStringAsync();
-
             return JsonConvert.DeserializeObject<T>(jsonResponse);
         }
     }

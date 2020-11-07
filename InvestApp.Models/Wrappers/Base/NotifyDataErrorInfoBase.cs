@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using HVTApp.Model.Wrapper.Base;
 
-namespace InvestApp.Models.Wrappers.Base
+namespace InvestApp.Domain.Wrappers.Base
 {
     public abstract class NotifyDataErrorInfoBase : ObservableWrapper, INotifyDataErrorInfo
     {
