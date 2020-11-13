@@ -11,8 +11,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Button Grid.Row="0" Content="Load" Command="{Binding LoadCommand}"></Button>
-
         <DataGrid Grid.Row="1" AutoGenerateColumns="True" ItemsSource="{Binding Collection}"></DataGrid>
 
     </Grid>

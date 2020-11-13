@@ -1,0 +1,13 @@
+﻿<mvvm:RibbonTabItemWithViewModel
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:infRib="http://infragistics.com/Ribbon" 
+             xmlns:mvvm="clr-namespace:InvestApp.Core.Mvvm;assembly=InvestApp.Core"
+             x:Class="InvestApp.Modules.ModuleName.Tabs.TinkoffPortfolioViewTab"
+             Header="Действия">
+
+    <infRib:RibbonGroup Caption="Позиции">
+        <infRib:ButtonTool Caption="Продать" Command="{Binding SellPositionCommand}"/>
+    </infRib:RibbonGroup>
+
+</mvvm:RibbonTabItemWithViewModel>

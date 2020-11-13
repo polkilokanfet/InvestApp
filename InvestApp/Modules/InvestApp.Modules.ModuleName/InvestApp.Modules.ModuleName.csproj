@@ -10,9 +10,21 @@
     <PackageReference Include="Infragistics.WPF.OutlookBar" Version="20.1.9" />
     <PackageReference Include="Infragistics.WPF.Ribbon" Version="20.1.9" />
     <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
+    <PackageReference Include="Tinkoff.Trading.OpenApi" Version="1.6.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\InvesApp.Services.Tinkoff\InvesApp.Services.Tinkoff.csproj" />
     <ProjectReference Include="..\..\..\InvestApp.Models\InvestApp.Domain.csproj" />
     <ProjectReference Include="..\..\InvestApp.Core\InvestApp.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Tabs\TinkoffPortfolioViewTab.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Tabs\TinkoffPortfolioViewTab.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 </Project>

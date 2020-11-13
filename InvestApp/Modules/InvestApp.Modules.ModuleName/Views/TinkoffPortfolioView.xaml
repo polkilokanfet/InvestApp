@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="InvestApp.Modules.ModuleName.Views.TinkoffPortfolioView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <DataGrid Grid.Row="0" ItemsSource="{Binding Positions}" AutoGenerateColumns="True" SelectedItem="{Binding SelectedPosition}"></DataGrid>
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Assets}" AutoGenerateColumns="True"></DataGrid>
+        <DataGrid Grid.Row="2" ItemsSource="{Binding Operations}" AutoGenerateColumns="True"></DataGrid>
+    </Grid>
+
+</UserControl>
