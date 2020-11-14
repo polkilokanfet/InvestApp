@@ -1,3 +1,4 @@
+﻿using InvestApp.Domain.Models;
 using Newtonsoft.Json;
 
 namespace InvestApp.Services.TinkoffOpenApiService.Models

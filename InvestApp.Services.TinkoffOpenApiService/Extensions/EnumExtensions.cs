@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using System.Runtime.Serialization;
 
-namespace InvestApp.Services.TinkoffOpenApiService
+namespace InvestApp.Services.TinkoffOpenApiService.Extensions
 {
     public static class EnumExtensions
     {

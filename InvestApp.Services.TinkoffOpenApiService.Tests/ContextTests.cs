@@ -4,11 +4,14 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
+using InvestApp.Domain.Models;
 using InvestApp.Services.TinkoffOpenApiService.Models;
 using InvestApp.Services.TinkoffOpenApiService.Network;
 using RichardSzalay.MockHttp;
 using InvestApp.Services.TinkoffOpenApiService.Tests.TestHelpers;
 using Xunit;
+using MarketInstrument = InvestApp.Services.TinkoffOpenApiService.Models.MarketInstrument;
+using Trade = InvestApp.Services.TinkoffOpenApiService.Models.Trade;
 
 namespace InvestApp.Services.TinkoffOpenApiService.Tests
 {

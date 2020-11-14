@@ -6,8 +6,8 @@
              x:Class="InvestApp.Modules.ModuleName.Tabs.TinkoffPortfolioViewTab"
              Header="Действия">
 
-    <infRib:RibbonGroup Caption="Позиции">
-        <infRib:ButtonTool Caption="Продать" Command="{Binding SellPositionCommand}"/>
+    <infRib:RibbonGroup Caption="Вид">
+        <infRib:ButtonTool Caption="Обновить" Command="{Binding RefreshCommand}"/>
     </infRib:RibbonGroup>
 
 </mvvm:RibbonTabItemWithViewModel>

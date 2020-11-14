@@ -5,8 +5,6 @@ using InvestApp.Services.TinkoffOpenApiService.Tests.TestHelpers;
 using Newtonsoft.Json;
 
 using InvestApp.Services.TinkoffOpenApiService.Models;
-using InvestApp.Services.TinkoffOpenApiService.Tests.TestHelpers;
-
 using Xunit;
 
 namespace InvestApp.Services.TinkoffOpenApiService.Tests

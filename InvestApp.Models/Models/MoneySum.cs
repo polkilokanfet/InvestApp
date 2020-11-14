@@ -2,7 +2,7 @@
 
 namespace InvestApp.Domain.Models
 {
-    public class MoneyAmount : BaseEntity
+    public class MoneySum : BaseEntity
     {
         public Currency Currency { get; set; }
         public decimal Value { get; set; }

@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using InvestApp.Domain.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using InvestApp.Services.TinkoffOpenApiService.Models;

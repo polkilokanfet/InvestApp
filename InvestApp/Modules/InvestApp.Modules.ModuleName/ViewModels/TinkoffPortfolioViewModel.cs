@@ -1,70 +1,83 @@
 ﻿using Prism.Mvvm;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
-using InvesApp.Services.Tinkoff;
 using InvestApp.Domain.Interfaces;
 using InvestApp.Infrastructure.Extansions;
+using InvestApp.Services.TinkoffOpenApiService;
 using Prism.Commands;
-using Tinkoff.Trading.OpenApi.Models;
-using Position = Tinkoff.Trading.OpenApi.Models.Portfolio.Position;
 
 namespace InvestApp.Modules.ModuleName.ViewModels
 {
     public class TinkoffPortfolioViewModel : BindableBase
     {
-        private readonly TinkoffRepository _tinkoffRepository;
-        private readonly IAssetStore _assetStore;
-        private readonly ObservableCollection<Position> _positions = new ObservableCollection<Position>();
-        private readonly ObservableCollection<Operation> _operations = new ObservableCollection<Operation>();
-        private readonly ObservableCollection<IAsset> _assets = new ObservableCollection<IAsset>();
-        
-        public IEnumerable<Position> Positions => _positions;
-        public IEnumerable<Operation> Operations => _operations;
+        private readonly IMarketStore _marketStore;
+        private readonly ObservableCollection<IAsset> _assets;
+        private bool _refreshInProcess = false;
+
         public IEnumerable<IAsset> Assets => _assets;
 
-        public Position SelectedPosition { get; set; }
-
-        public ICommand SellPositionCommand { get; }
-
-        public TinkoffPortfolioViewModel(TinkoffRepository tinkoffRepository, IAssetStore assetStore)
+        public bool RefreshInProcess
         {
-            _tinkoffRepository = tinkoffRepository;
-            _assetStore = assetStore;
-            Load();
-
-            SellPositionCommand = new DelegateCommand(
-                async () =>
-                {
-                    await _tinkoffRepository.SellPositionAsync(SelectedPosition.Figi, SelectedPosition.Lots);
-                });
+            get => _refreshInProcess;
+            set
+            {
+                if (Equals(_refreshInProcess, value)) return;
+                _refreshInProcess = value;
+                ((DelegateCommand)RefreshCommand).RaiseCanExecuteChanged();
+            }
         }
 
-        private void Load()
+        public ICommand RefreshCommand { get; }
+
+        public TinkoffPortfolioViewModel(IMarketStore marketStore)
         {
-            _ = _tinkoffRepository.GetPortfolioAsync().Await(
-                portfolio =>
-                {
-                    _positions.Clear();
-                    _positions.AddRange(portfolio.Positions);
-                });
+            _marketStore = marketStore;
 
-            _ = _tinkoffRepository.GetOperationsAllAsync().Await(
-                operations =>
-                {
-                    _operations.Clear();
-                    _operations.AddRange(operations);
-                });
+            _assets = new ObservableCollection<IAsset>(_marketStore.GetAssets());
 
-            _ = _assetStore.GetAllAssetsAsync().Await(
-                assets =>
+            RefreshCommand = new DelegateCommand(Refresh, () => !RefreshInProcess);
+
+            Refresh();
+        }
+
+        private void Refresh()
+        {
+            RefreshInProcess = true;
+
+            _ = _marketStore.RefreshTransactionsAsync().Await(
+                async transactionsNew =>
                 {
-                    _assets.Clear();
-                    _assets.AddRange(assets);
+                    foreach (var transactions in transactionsNew.GroupBy(transaction => transaction.Instrument))
+                    {
+                        Asset asset = (Asset)Assets.SingleOrDefault(x => x.Instrument.Id == transactions.Key.Id);
+                        if (asset != null)
+                        {
+                            asset.Transactions.AddRange(transactions);
+                        }
+                        else
+                        {
+                            _assets.Add(new Asset(transactions));
+                        }
+                    }
+
+                    await RefreshAssetsLastPrices();
+
+                    RefreshInProcess = false;
                 },
                 exception =>
                 {
                 });
+        }
+
+        private async Task RefreshAssetsLastPrices()
+        {
+            foreach (IAsset asset in Assets)
+            {
+                ((Asset)asset).PricePerShare = await _marketStore.RefreshInstrumentLastPriceAsync(asset.Instrument.Figi);
+            }
         }
     }
 }

@@ -9,7 +9,6 @@ using System.Runtime.CompilerServices;
 using InvestApp.Domain.Interfaces;
 using InvestApp.Domain.Wrappers.Base.TrackingCollections;
 using InvestApp.Infrastructure.Extansions;
-using InvestApp.Models.Wrappers.Base;
 
 namespace InvestApp.Domain.Wrappers.Base
 {

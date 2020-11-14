@@ -10,7 +10,7 @@ namespace InvestApp.Domain.Interfaces
         /// <summary>
         /// Инструмент
         /// </summary>
-        MarketInstrument MarketInstrument { get; }
+        Instrument Instrument { get; }
 
         /// <summary>
         /// Количество
@@ -20,11 +20,12 @@ namespace InvestApp.Domain.Interfaces
         /// <summary>
         /// Цена покупки единицы актива
         /// </summary>
-        double PricePerShareBuy { get; }
+        decimal PricePerShareBuy { get; }
 
         /// <summary>
         /// Цена текущая единицы актива
         /// </summary>
-        double PricePerShare { get; }
+        decimal PricePerShare { get; }
+
     }
 }

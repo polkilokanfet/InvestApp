@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using InvestApp.Domain.Models;
 using InvestApp.Services.TinkoffOpenApiService.Models;
 
 namespace InvestApp.Services.TinkoffOpenApiService.Network

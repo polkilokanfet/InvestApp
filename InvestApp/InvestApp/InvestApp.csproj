@@ -12,10 +12,9 @@
     <PackageReference Include="Prism.DryIoc" Version="7.2.0.1422" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\InvesApp.Services.Tinkoff\InvesApp.Services.Tinkoff.csproj" />
-    <ProjectReference Include="..\..\InvestApp.Services.AssetStoreService\InvestApp.Services.AssetStoreService.csproj" />
     <ProjectReference Include="..\..\InvestApp.Services.DataBaseAccess\InvestApp.Services.DataBaseAccess.csproj" />
     <ProjectReference Include="..\..\InvestApp.Services.FinancialModelingPrepService\InvestApp.Services.FinancialModelingPrepService.csproj" />
+    <ProjectReference Include="..\..\InvestApp.Services.TinkoffOpenApiService\InvestApp.Services.TinkoffOpenApiService.csproj" />
     <ProjectReference Include="..\InvestApp.Core\InvestApp.Core.csproj" />
     <ProjectReference Include="..\Modules\InvestApp.Modules.ModuleName\InvestApp.Modules.ModuleName.csproj" />
     <ProjectReference Include="..\Services\InvestApp.Services\InvestApp.Services.csproj" />

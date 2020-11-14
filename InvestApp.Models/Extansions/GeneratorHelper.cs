@@ -14,7 +14,7 @@ namespace InvestApp.Domain.Extansions
         /// <returns></returns>
         public static IEnumerable<Type> GetModelTypesPocos()
         {
-            var type = typeof(Operation);
+            var type = typeof(Transaction);
             var typeNamespace = type.Namespace;
             //return typeof(Address).Assembly.GetTypes().Where(x => !x.IsAbstract && !x.IsEnum && x.Namespace == ns && !x.Name.Contains("<"));
             return type.Assembly.GetTypes().Where(type1 => type1.Namespace == typeNamespace && CommonExtansions.GetBaseTypes(type1).Contains(typeof(BaseEntity)));

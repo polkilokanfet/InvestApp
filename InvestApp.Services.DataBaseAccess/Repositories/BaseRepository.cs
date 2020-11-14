@@ -5,7 +5,7 @@ using InvestApp.Domain.Interfaces;
 using InvestApp.Domain.Services.DataBaseAccess;
 using Microsoft.EntityFrameworkCore;
 
-namespace InvestApp.Services.DataBaseAccess
+namespace InvestApp.Services.DataBaseAccess.Repositories
 {
     public class BaseRepository<TEntity> : IRepository<TEntity>
         where TEntity : class, IBaseEntity

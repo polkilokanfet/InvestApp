@@ -3,7 +3,6 @@ using System.Windows.Input;
 using InvestApp.Core.Mvvm;
 using InvestApp.Domain.Models;
 using InvestApp.Domain.Services;
-using InvestApp.Models;
 using Prism.Commands;
 using Prism.Regions;
 

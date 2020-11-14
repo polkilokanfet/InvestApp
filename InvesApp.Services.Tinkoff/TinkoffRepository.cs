@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InvestApp.Domain.Models;
 using Tinkoff.Trading.OpenApi.Models;
 using Tinkoff.Trading.OpenApi.Network;
 using InstrumentType = InvestApp.Domain.Models.InstrumentType;
-using Operation = InvestApp.Domain.Models.Operation;
-using OperationTcs = Tinkoff.Trading.OpenApi.Models.Operation;
+using MarketInstrument = Tinkoff.Trading.OpenApi.Models.MarketInstrument;
 
 namespace InvesApp.Services.Tinkoff
 {
@@ -25,14 +25,14 @@ namespace InvesApp.Services.Tinkoff
             return await _context.PortfolioAsync();
         }
 
-        public async Task<List<OperationTcs>> GetOperationsAllAsync()
+        public async Task<List<Operation>> GetOperationsAllAsync()
         {
             return await _context.OperationsAsync(DateTime.Now.AddDays(-700), DateTime.Now, null);
         }
 
-        public async Task<List<Operation>> GetOperationsAsync()
+        public async Task<List<MarketTransaction>> GetOperationsAsync()
         {
-            var result = new List<Operation>();
+            var result = new List<MarketTransaction>();
 
             var account = await _context.RegisterAsync(BrokerAccountType.Tinkoff);
             var portfolio = await this.GetPortfolioAsync();
@@ -41,7 +41,7 @@ namespace InvesApp.Services.Tinkoff
                 var operations = await _context.OperationsAsync(DateTime.Now.AddDays(-30), DateTime.Now, position.Figi);
                 foreach (var operation in operations)
                 {
-                    result.Add(new Operation()
+                    result.Add(new MarketTransaction()
                     {
                         Figi = operation.Figi,
                         Payment = operation.Payment,

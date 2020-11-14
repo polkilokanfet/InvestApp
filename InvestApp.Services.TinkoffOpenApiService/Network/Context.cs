@@ -4,7 +4,7 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using InvestApp.Services.TinkoffOpenApiService;
+using InvestApp.Services.TinkoffOpenApiService.Extensions;
 using Newtonsoft.Json;
 using InvestApp.Services.TinkoffOpenApiService.Models;
 

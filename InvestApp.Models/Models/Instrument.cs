@@ -1,6 +1,11 @@
-﻿namespace InvestApp.Domain.Models
+﻿using InvestApp.Domain.Models.Base;
+
+namespace InvestApp.Domain.Models
 {
-    public class MarketInstrument
+    /// <summary>
+    /// Рыночный инструмент (акция / облигация / фонд / валюта)
+    /// </summary>
+    public class Instrument : BaseEntity
     {
         public string Figi { get; set; }
         public string Ticker { get; set; }
@@ -11,6 +16,7 @@
         public decimal MinPriceIncrement { get; set; }
         public int Lot { get; set; }
         public Currency Currency { get; set; }
+        public decimal LastPrice { get; set; }
         public string Name { get; set; }
         public InstrumentType Type { get; set; }
 

@@ -1,6 +1,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
+using InvestApp.Domain.Models;
 using RichardSzalay.MockHttp;
 using InvestApp.Services.TinkoffOpenApiService.Models;
 using InvestApp.Services.TinkoffOpenApiService.Network;

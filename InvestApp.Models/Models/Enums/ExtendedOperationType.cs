@@ -1,5 +1,9 @@
-﻿namespace InvestApp.Domain.Models
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+namespace InvestApp.Domain.Models
 {
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum ExtendedOperationType
     {
         Buy,

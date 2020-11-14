@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using InvestApp.Domain.Interfaces;
-using Tinkoff.Trading.OpenApi.Models;
-using MarketInstrument = InvestApp.Domain.Models.MarketInstrument;
+using InvestApp.Domain.Models;
+using InvestApp.Services.TinkoffOpenApiService.Models;
 
 namespace InvestApp.Services.AssetStoreService
 {
@@ -14,15 +14,15 @@ namespace InvestApp.Services.AssetStoreService
         private IEnumerable<Operation> OperationsBuy => Operations.Where(operation => operation.OperationType == ExtendedOperationType.Buy);
         private IEnumerable<Operation> OperationsSell => Operations.Where(operation => operation.OperationType == ExtendedOperationType.Sell);
 
-        public MarketInstrument MarketInstrument { get; }
+        public Instrument Instrument { get; }
         public int Shares => OperationsBuy.Sum(operation => operation.Quantity) - OperationsSell.Sum(operation => operation.Quantity);
         public double PricePerShareBuy => GetPricePerShareStart();
         public double PricePerShare { get; }
 
-        public Asset(IEnumerable<Operation> operations, MarketInstrument marketInstrument, double price)
+        public Asset(IEnumerable<Operation> operations, Instrument instrument, double price)
         {
             Operations = new ObservableCollection<Operation>(operations);
-            MarketInstrument = marketInstrument;
+            Instrument = instrument;
             PricePerShare = price;
         }
 
