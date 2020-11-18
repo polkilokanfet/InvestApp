@@ -9,6 +9,11 @@ namespace InvestApp.Services.DataBaseAccess
         public DbSet<Instrument> Instruments { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<MoneySum> MoneySums { get; set; }
+        public DbSet<CompanyProfile> CompanyProfiles { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<Industry> Industries { get; set; }
+        public DbSet<Sector> Sectors { get; set; }
+        public DbSet<FinancialRatio> FinancialRatios { get; set; }
 
         public InvestAppDbContext()
         {

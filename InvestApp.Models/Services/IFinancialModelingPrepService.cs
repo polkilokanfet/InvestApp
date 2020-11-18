@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using InvestApp.Domain.Exceptions;
 using InvestApp.Domain.Models;
+using InvestApp.Domain.Models.FinMod;
 
 namespace InvestApp.Domain.Services
 {
@@ -15,8 +16,10 @@ namespace InvestApp.Domain.Services
         /// <returns>The price of symbol.</returns>
         /// <exception cref="InvalidSymbolException">Thrown if symbol does not exist.</exception>
         /// <exception cref="Exception">Thrown if getting the symbol fails.</exception>
-        Task<double> GetPrice(string symbol);
-        Task<MajorIndex> GetMajorIndex(MajorIndexType indexType);
-        Task<List<StockListItem>> GetStockList();
+        Task<double> GetPriceAsync(string symbol);
+        Task<MajorIndex> GetMajorIndexAsync(MajorIndexType indexType);
+        Task<List<StockListItem>> GetStockListAsync();
+        Task<CompanyProfileFinMod> GetCompanyProfileAsync(string symbol);
+        Task<List<FinancialRatio>> GetFinancialRatiosAsync(string symbol);
     }
 }

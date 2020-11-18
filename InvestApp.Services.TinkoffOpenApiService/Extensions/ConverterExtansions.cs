@@ -1,4 +1,5 @@
-﻿using InvestApp.Domain.Models;
+﻿using System.Linq;
+using InvestApp.Domain.Models;
 using InvestApp.Services.TinkoffOpenApiService.Models;
 
 namespace InvestApp.Services.TinkoffOpenApiService.Extensions
@@ -44,9 +45,11 @@ namespace InvestApp.Services.TinkoffOpenApiService.Extensions
                 IsMarginCall = operation.IsMarginCall,
                 OperationType = operation.OperationType,
                 Status = operation.Status,
-                Quantity = operation.Quantity,
+                Quantity = operation.Trades?.Sum(trade => trade.Quantity) ?? operation.Quantity,
                 Commission = operation.Commission.ToMoneySum(),
-                Price = new MoneyAmount(operation.Currency, operation.Price).ToMoneySum(),
+                Currency = operation.Currency,
+                Price = operation.Price,
+                Payment = operation.Payment,
                 Instrument = instrument
             };
 

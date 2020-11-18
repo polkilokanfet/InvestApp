@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using InvestApp.Domain.Exceptions;
 using InvestApp.Domain.Models;
+using InvestApp.Domain.Models.FinMod;
 using InvestApp.Domain.Services;
 
 namespace InvestApp.Services.FinancialModelingPrepService
@@ -16,7 +18,7 @@ namespace InvestApp.Services.FinancialModelingPrepService
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<double> GetPrice(string symbol)
+        public async Task<double> GetPriceAsync(string symbol)
         {
             using (FinancialModelingHttpClient client = _httpClientFactory.CreateHttpClient())
             {
@@ -30,17 +32,43 @@ namespace InvestApp.Services.FinancialModelingPrepService
             }
         }
 
-        public async Task<List<StockListItem>> GetStockList()
+        public async Task<List<StockListItem>> GetStockListAsync()
         {
             using (FinancialModelingHttpClient client = _httpClientFactory.CreateHttpClient())
             {
                 string uri = "stock/list";
-                var stockList = await client.GetAsync<List<StockListItem>>(uri);
+                List<StockListItem> stockList = await client.GetAsync<List<StockListItem>>(uri);
                 return stockList;
             }
         }
 
-        public async Task<MajorIndex> GetMajorIndex(MajorIndexType indexType)
+        public async Task<CompanyProfileFinMod> GetCompanyProfileAsync(string symbol)
+        {
+            using (FinancialModelingHttpClient client = _httpClientFactory.CreateHttpClient())
+            {
+                string uri = $"profile/{symbol}";
+                List<CompanyProfileFinMod> companyProfiles = await client.GetAsync<List<CompanyProfileFinMod>>(uri);
+                if (!companyProfiles.Any())
+                {
+                    throw new InvalidSymbolException(symbol);
+                }
+                return companyProfiles.First();
+            }
+        }
+
+        public async Task<List<FinancialRatio>> GetFinancialRatiosAsync(string symbol)
+        {
+            using (FinancialModelingHttpClient client = _httpClientFactory.CreateHttpClient())
+            {
+                string uri = $"ratios/{symbol}";
+                List<FinancialRatio> ratios = await client.GetAsync<List<FinancialRatio>>(uri);
+                return ratios;
+            }
+        }
+
+        #region GetMajorIndex
+
+        public async Task<MajorIndex> GetMajorIndexAsync(MajorIndexType indexType)
         {
             using (FinancialModelingHttpClient client = _httpClientFactory.CreateHttpClient())
             {
@@ -61,5 +89,7 @@ namespace InvestApp.Services.FinancialModelingPrepService
                 default: throw new Exception("MajorIndexType does not have a suffix defined.");
             }
         }
+
+        #endregion
     }
 }

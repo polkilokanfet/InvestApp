@@ -39,14 +39,29 @@ namespace InvestApp.Domain.Models
         public MoneySum Commission { get; set; } = new MoneySum();
 
         /// <summary>
+        /// Валюта транзакции
+        /// </summary>
+        public Currency Currency { get; set; }
+
+        /// <summary>
         /// Цена единицы
         /// </summary>
-        public MoneySum Price { get; set; } = new MoneySum();
+        public decimal Price { get; set; }
+
+        /// <summary>
+        /// Платеж транзакции
+        /// </summary>
+        public decimal Payment { get; set; }
 
         /// <summary>
         /// Дата транзакции
         /// </summary>
         public DateTime Date { get; set; }
+
+        /// <summary>
+        /// Курс для перевода платежа к валюте инструмента
+        /// </summary>
+        public decimal? ExchangeRate { get; set; }
 
         public bool IsMarginCall { get; set; } = false;
     }

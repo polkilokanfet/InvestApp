@@ -15,8 +15,9 @@ namespace InvestApp.Modules.ModuleName
 
         public override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation<ViewA>();
+            containerRegistry.RegisterForNavigation<InstrumentsView>();
             containerRegistry.RegisterForNavigation<TinkoffPortfolioView>();
+            containerRegistry.RegisterForNavigation<TransactionsAllView>();
         }
 
         protected override void ResolveOutlookGroup()

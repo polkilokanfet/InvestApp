@@ -11,6 +11,8 @@ using InvestApp.Domain.Services;
 using InvestApp.Domain.Services.DataBaseAccess;
 using Prism.Modularity;
 using InvestApp.Modules.ModuleName;
+using InvestApp.Modules.ModuleName.ViewModels;
+using InvestApp.Services;
 using InvestApp.Services.DataBaseAccess;
 using InvestApp.Services.FinancialModelingPrepService;
 using InvestApp.Services.TinkoffOpenApiService;
@@ -28,15 +30,25 @@ namespace InvestApp
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterInstance<FinancialModelingHttpClientFactory>(new FinancialModelingHttpClientFactory("54f54a0a0365d2cc288f3c5b02e709b5"));
+
             containerRegistry.RegisterSingleton<IApplicationCommands, ApplicationCommands>();
             containerRegistry.RegisterSingleton<DbContext, InvestAppDbContext>();
             containerRegistry.RegisterSingleton<IUnitOfWork, UnitOfWork>();
+            containerRegistry.RegisterSingleton<IMessageService, MessageService>();
             containerRegistry.RegisterSingleton<IFinancialModelingPrepService, FinancialModelingService>();
+            containerRegistry.RegisterSingleton<AssetsViewModel>();
 
-            string tokenSandbox = @"t.6S_c2O6mXa8dkH6aHkZvACVa_jeRyRAR-q_k7zmF-0qbyjW2vEX09a01wCJegeJ6aV38vPfl5jsvw_taUpbuUQ";
-            containerRegistry.RegisterInstance<IMarketStore>(new MarketStore(tokenSandbox, Container.Resolve<IUnitOfWork>()));
+            //string tokenSandbox = @"t.6S_c2O6mXa8dkH6aHkZvACVa_jeRyRAR-q_k7zmF-0qbyjW2vEX09a01wCJegeJ6aV38vPfl5jsvw_taUpbuUQ";
+            string token = @"t.CdFxair_TTItA-48yTBZU5-XmV2bV63uL5AFFit4yUxcRC0HOczQDNsNKgTEy8hF0jXvWCDaqvyI35pXM7FecA";
+            containerRegistry.RegisterInstance<IMarketStore>(
+                new MarketStore(
+                    token, 
+                    false, 
+                    Container.Resolve<IUnitOfWork>(), 
+                    Container.Resolve<IMessageService>(), 
+                    Container.Resolve<IFinancialModelingPrepService>()));
 
-            containerRegistry.RegisterInstance<FinancialModelingHttpClientFactory>(new FinancialModelingHttpClientFactory("54f54a0a0365d2cc288f3c5b02e709b5"));
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

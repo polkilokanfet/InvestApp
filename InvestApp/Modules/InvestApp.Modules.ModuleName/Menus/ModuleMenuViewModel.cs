@@ -14,7 +14,9 @@ namespace InvestApp.Modules.ModuleName.Menus
         {
             var b = new NavigationItem("Тинькофф", typeof(TinkoffPortfolioView));
             Items.Add(b);
-            var a = new NavigationItem("AAA", typeof(ViewA));
+            Items.Add(new NavigationItem("Транзакции", typeof(TransactionsAllView)));
+
+            var a = new NavigationItem("Инструменты", typeof(InstrumentsView));
             Items.Add(a);
         }
     }

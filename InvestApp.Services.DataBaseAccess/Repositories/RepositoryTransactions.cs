@@ -14,7 +14,6 @@ namespace InvestApp.Services.DataBaseAccess.Repositories
         {
             return Context.Set<Transaction>().AsQueryable()
                 .Include(transaction => transaction.Instrument)
-                .Include(transaction => transaction.Price)
                 .Include(transaction => transaction.Commission);
         }
     }

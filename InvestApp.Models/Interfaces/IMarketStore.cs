@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using InvestApp.Domain.Models;
 
@@ -32,5 +33,25 @@ namespace InvestApp.Domain.Interfaces
         Task<List<Instrument>> RefreshMarketInstrumentsAsync(bool includeRefreshPrices = true);
 
         Task<decimal> RefreshInstrumentLastPriceAsync(string figi);
+
+        /// <summary>
+        /// Цена актива
+        /// </summary>
+        /// <param name="figi">FIGI</param>
+        /// <param name="moment">Момент времени</param>
+        /// <returns>Цена</returns>
+        Task<decimal> GetPrice(string figi, DateTime moment = default);
+
+        /// <summary>
+        /// Курс валюты к рублю
+        /// </summary>
+        /// <param name="currency">Валюта</param>
+        /// <param name="moment"></param>
+        /// <returns></returns>
+        Task<decimal> GetRubExchangeRate(Currency currency, DateTime moment = default);
+
+        Task<CompanyProfile> GetCompanyProfileAsync(string symbol);
+
+        Task<List<FinancialRatio>> GetFinancialRatiosAsync(CompanyProfile company);
     }
 }

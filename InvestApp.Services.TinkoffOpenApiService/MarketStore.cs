@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using InvestApp.Domain.Interfaces;
 using InvestApp.Domain.Models;
+using InvestApp.Domain.Models.FinMod;
+using InvestApp.Domain.Services;
 using InvestApp.Domain.Services.DataBaseAccess;
 using InvestApp.Services.TinkoffOpenApiService.Extensions;
 using InvestApp.Services.TinkoffOpenApiService.Models;
@@ -14,13 +16,29 @@ namespace InvestApp.Services.TinkoffOpenApiService
     public class MarketStore : IMarketStore
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ISandboxContext _context;
+        private readonly IFinancialModelingPrepService _financialModelingPrepService;
+        private readonly IContext _context;
 
-        public MarketStore(string tokenSandbox, IUnitOfWork unitOfWork)
+        public MarketStore(string token, bool isSandbox, IUnitOfWork unitOfWork, IMessageService messageService, IFinancialModelingPrepService financialModelingPrepService)
         {
-            var connection = ConnectionFactory.GetSandboxConnection(tokenSandbox);
-            _context = connection.Context;
             _unitOfWork = unitOfWork;
+            _financialModelingPrepService = financialModelingPrepService;
+
+            if (isSandbox)
+            {
+                SandboxConnection connection = ConnectionFactory.GetSandboxConnection(token);
+                _context = connection.Context;
+            }
+            else
+            {
+                Connection connection = ConnectionFactory.GetConnection(token);
+                _context = connection.Context;
+            }
+
+            _context.WebSocketException += (sender, exception) =>
+            {
+                messageService.ShowMessage(exception.Message);
+            };
         }
 
         public async Task<IEnumerable<Transaction>> RefreshTransactionsAsync()
@@ -32,7 +50,8 @@ namespace InvestApp.Services.TinkoffOpenApiService
             List<string> tcsIds = transactions.Select(transaction => transaction.IdTcs).Where(id => id != null).Distinct().ToList();
 
             //загрузка транзакций из Api
-            IEnumerable<Operation> operationsApi = await _context.OperationsAsync(DateTime.Now.AddDays(-1000), DateTime.Now, null);
+            IEnumerable<Operation> operationsApi = await _context.OperationsAsync(new DateTime(2015, 9, 1), DateTime.Now, null);
+            //var op = operationsApi.Where(x => x.OperationType == ExtendedOperationType.Repayment).ToList();
             List<Operation> operationsNew = operationsApi.Where(operation => !tcsIds.Contains(operation.Id)).ToList();
 
             if (operationsNew.Any())
@@ -41,6 +60,7 @@ namespace InvestApp.Services.TinkoffOpenApiService
                 List<string> figiList = instruments.Select(instrument => instrument.Figi).Where(figi => figi != null).Distinct().ToList();
 
                 //обновление инструментов
+                var ss = operationsNew.Select(operation => operation.Figi).Distinct().ToList();
                 if (operationsNew.Select(operation => operation.Figi).Any(figi => !figiList.Contains(figi)))
                 {
                     await RefreshMarketInstrumentsAsync();
@@ -49,7 +69,8 @@ namespace InvestApp.Services.TinkoffOpenApiService
 
                 foreach (Operation operation in operationsNew)
                 {
-                    Transaction transaction = operation.ToTransaction(instruments.Single(instrument => instrument.Figi == operation.Figi));
+                    Instrument instrument = instruments.SingleOrDefault(instr => instr.Figi == operation.Figi);
+                    Transaction transaction = operation.ToTransaction(instrument);
                     _unitOfWork.Repository<Transaction>().Add(transaction);
                     result.Add(transaction);
                 }
@@ -62,8 +83,11 @@ namespace InvestApp.Services.TinkoffOpenApiService
 
         public IEnumerable<IAsset> GetAssets()
         {
-            List<Transaction> transactions = _unitOfWork.Repository<Transaction>().GetAll();
-            return transactions.GroupBy(transaction => transaction.Instrument).Select(x => new Asset(x));
+            List<Transaction> transactions = _unitOfWork.Repository<Transaction>().Find(transaction => transaction.Instrument != null);
+            return transactions
+                .GroupBy(transaction => transaction.Instrument)
+                .Where(x => x.Any(transaction => transaction.Status != OperationStatus.Decline))
+                .Select(x => new Asset(x, this));
         }
 
         public async Task<List<Instrument>> GetMarketInstruments()
@@ -112,28 +136,118 @@ namespace InvestApp.Services.TinkoffOpenApiService
             return instrument.LastPrice;
         }
 
-        public async Task<decimal> GetPrice(string figi)
+        public async Task<decimal> GetPrice(string figi, DateTime moment = default)
         {
-            try
-            {
-                var orderBook = await _context.MarketOrderbookAsync(figi, 1);
+            //по стакану
+            if (moment == default)
+                return await GetPriceByOrderbook(figi);
 
-                return orderBook.Asks.Any() 
-                    ? orderBook.Asks.OrderBy(orderbookRecord => orderbookRecord.Price).First().Price 
-                    : orderBook.LastPrice;
-            }
-            catch (OpenApiException e)
+            //по истории свечей
+            CandleList candleList = await _context.MarketCandlesAsync(figi, moment.AddDays(-7), moment, CandleInterval.Week);
+            if (candleList.Candles.Any())
+                return candleList.Candles.OrderBy(candle => candle.Time).Last().Close;
+            
+            throw new Exception($"Не удалось найти цену на {moment.ToShortDateString()} с FIGI {figi}");
+        }
+
+        public async Task<decimal> GetRubExchangeRate(Currency currency, DateTime moment = default)
+        {
+            if (currency == Currency.Rub)
+                return 1;
+
+            string figi;
+            switch (currency)
             {
-                Console.WriteLine(e);
+                case Currency.Usd:
+                    figi = "BBG0013HGFT4";
+                    break;
+                case Currency.Eur:
+                    figi = "BBG0013HJJ31";
+                    break;
+                case Currency.Gbp:
+                    throw new NotImplementedException();
+                case Currency.Hkd:
+                    throw new NotImplementedException();
+                case Currency.Chf:
+                    throw new NotImplementedException();
+                case Currency.Jpy:
+                    throw new NotImplementedException();
+                case Currency.Cny:
+                    throw new NotImplementedException();
+                case Currency.Try:
+                    throw new NotImplementedException();
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(currency), currency, null);
             }
 
-            return 0;
+            return await GetPrice(figi, moment);
+        }
+
+        /// <summary>
+        /// Цена из стакана
+        /// </summary>
+        /// <param name="figi"></param>
+        /// <returns></returns>
+        private async Task<decimal> GetPriceByOrderbook(string figi)
+        {
+            //try
+            //{
+            var orderBook = await _context.MarketOrderbookAsync(figi, 1);
+            return orderBook.LastPrice;
+            //}
+            //catch (OpenApiException e)
+            //{
+            //    Console.WriteLine(e);
+            //}
+
+            //return 0;
         }
 
         public async Task SellPositionAsync(string figi, int lots)
         {
             MarketOrder marketOrder = new MarketOrder(figi, lots, OperationType.Sell);
             await _context.PlaceMarketOrderAsync(marketOrder);
+        }
+
+        public async Task<CompanyProfile> GetCompanyProfileAsync(string symbol)
+        {
+            //по возможности возвращаем сохраненный профиль
+            CompanyProfile companyProfile = _unitOfWork
+                .Repository<CompanyProfile>()
+                .Find(profile => profile.Symbol == symbol)
+                .FirstOrDefault();
+            if (companyProfile != null) return companyProfile;
+
+            //загружаем профиль из сервиса
+            CompanyProfileFinMod companyProfileFinMod = await _financialModelingPrepService.GetCompanyProfileAsync(symbol);
+            companyProfile = new CompanyProfile
+            {
+                Cik = companyProfileFinMod.Cik, 
+                Cusip = companyProfileFinMod.Cusip, 
+                Currency = companyProfileFinMod.Currency, 
+                CompanyName = companyProfileFinMod.CompanyName, 
+                Description = companyProfileFinMod.Description, 
+                Country = _unitOfWork.Repository<Country>().Find(country => country.Name == companyProfileFinMod.Country).SingleOrDefault() ?? new Country {Name = companyProfileFinMod.Country}, 
+                Exchange = _unitOfWork.Repository<Exchange>().Find(exchange => exchange.ShortName == companyProfileFinMod.ExchangeShortName).SingleOrDefault() ?? new Exchange { ShortName = companyProfileFinMod.ExchangeShortName, FullName = companyProfileFinMod.Exchange }, 
+                Industry = _unitOfWork.Repository<Industry>().Find(industry => industry.Name == companyProfileFinMod.Industry).SingleOrDefault() ?? new Industry { Name = companyProfileFinMod.Industry },
+                Sector = _unitOfWork.Repository<Sector>().Find(sector => sector.Name == companyProfileFinMod.Sector).SingleOrDefault() ?? new Sector { Name = companyProfileFinMod.Sector },
+                Image = companyProfileFinMod.Image, 
+                IpoDate = companyProfileFinMod.IpoDate, 
+                Isin = companyProfileFinMod.Isin, 
+                Symbol = companyProfileFinMod.Symbol, 
+                Website = companyProfileFinMod.Website
+            };
+            companyProfile.FinancialRatios = await GetFinancialRatiosAsync(companyProfile);
+            _unitOfWork.Repository<CompanyProfile>().Add(companyProfile);
+            _unitOfWork.SaveChanges();
+
+            return companyProfile;
+        }
+
+        public async Task<List<FinancialRatio>> GetFinancialRatiosAsync(CompanyProfile company)
+        {
+            var result = await _financialModelingPrepService.GetFinancialRatiosAsync(company.Symbol);
+            return result;
         }
     }
 }

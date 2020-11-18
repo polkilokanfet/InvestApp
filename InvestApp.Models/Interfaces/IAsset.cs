@@ -1,4 +1,5 @@
-﻿using InvestApp.Domain.Models;
+﻿using System;
+using InvestApp.Domain.Models;
 
 namespace InvestApp.Domain.Interfaces
 {
@@ -27,5 +28,14 @@ namespace InvestApp.Domain.Interfaces
         /// </summary>
         decimal PricePerShare { get; }
 
+        /// <summary>
+        /// Событие изменения последнего прайса инструмента
+        /// </summary>
+        event Action<Instrument, decimal> InstrumentLastPriceChanged;
+
+        /// <summary>
+        /// Событие изменения коэффициента приведения транзакции к валюте инструмента
+        /// </summary>
+        event Action<Transaction, decimal> TransactionExchangeRateChanged;
     }
 }

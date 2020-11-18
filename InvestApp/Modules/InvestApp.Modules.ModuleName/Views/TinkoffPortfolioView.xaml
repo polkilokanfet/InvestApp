@@ -5,15 +5,14 @@
              xmlns:controls="clr-namespace:InvestApp.Modules.ModuleName.Controls"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
 
-        <DataGrid Grid.Row="0" ItemsSource="{Binding Positions}" AutoGenerateColumns="True" SelectedItem="{Binding SelectedPosition}"></DataGrid>
-        <controls:AssetListing Grid.Row="1" DataContext="{Binding}"/>
-        <DataGrid Grid.Row="2" ItemsSource="{Binding Operations}" AutoGenerateColumns="True"></DataGrid>
+        <controls:AssetListing Grid.Column="0" DataContext="{Binding AssetsViewModel}"/>
+        <controls:TransactionListing Grid.Column="1" DataContext="{Binding TransactionViewModel}"/>
+
     </Grid>
 
 </UserControl>

@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="InvestApp.Modules.ModuleName.Controls.TransactionListing"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ig="http://infragistics.com/DataPresenter">
+
+    <ig:XamDataGrid DataSource="{Binding Transactions}"
+                    ActiveDataItem="{Binding ActiveTransaction}">
+
+        <ig:XamDataGrid.FieldLayoutSettings>
+            <ig:FieldLayoutSettings AutoGenerateFields="False" 
+                                    AllowDelete="False" 
+                                    AllowAddNew="False"
+                                    FilterUIType="LabelIcons"/>
+        </ig:XamDataGrid.FieldLayoutSettings>
+
+        <ig:XamDataGrid.FieldSettings>
+            <ig:FieldSettings AllowEdit="False" 
+                              AllowResize="True"
+                              AllowRecordFiltering="True"
+                              FilterLabelIconDropDownType="MultiSelectExcelStyle"/>
+        </ig:XamDataGrid.FieldSettings>
+
+        <ig:XamDataGrid.FieldLayouts>
+            <ig:FieldLayout>
+
+                <ig:DateTimeField BindingType="UseAlternateBinding" AlternateBinding="{Binding Date}" Label="Дата" Width="Auto"/>
+                <ig:NumericField BindingType="UseAlternateBinding" AlternateBinding="{Binding Quantity}" Label="Кол" Width="Auto"/>
+                <ig:NumericField BindingType="UseAlternateBinding" AlternateBinding="{Binding Price}" Label="Цена" Width="Auto"/>
+                <ig:NumericField BindingType="UseAlternateBinding" AlternateBinding="{Binding Payment}" Label="Платеж" Width="Auto"/>
+                <ig:TextField BindingType="UseAlternateBinding" AlternateBinding="{Binding Currency}" Label="Валюта" Width="Auto"/>
+                <ig:TextField BindingType="UseAlternateBinding" AlternateBinding="{Binding OperationType}" Label="Операция" Width="Auto"/>
+                <ig:TextField BindingType="UseAlternateBinding" AlternateBinding="{Binding Status}" Label="Статус" Width="Auto"/>
+                <ig:NumericField BindingType="UseAlternateBinding" AlternateBinding="{Binding Commission.Value}" Label="Комиссия" Width="Auto"/>
+                <ig:TextField BindingType="UseAlternateBinding" AlternateBinding="{Binding Instrument.Figi}" Label="Инструмент" Width="200"/>
+
+            </ig:FieldLayout>
+        </ig:XamDataGrid.FieldLayouts>
+
+    </ig:XamDataGrid>
+
+
+</UserControl>

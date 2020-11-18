@@ -1,0 +1,43 @@
+﻿<mvvm:ViewBase x:Class="InvestApp.Modules.ModuleName.Views.InstrumentsView"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:mvvm="clr-namespace:InvestApp.Core.Mvvm;assembly=InvestApp.Core"
+               xmlns:prism="http://prismlibrary.com/"
+               xmlns:igDP="http://infragistics.com/DataPresenter"
+               prism:ViewModelLocator.AutoWireViewModel="True" >
+    <Grid>
+        <igDP:XamDataGrid DataSource="{Binding Instruments}"
+                    ActiveDataItem="{Binding ActiveTransaction}">
+
+            <igDP:XamDataGrid.FieldLayoutSettings>
+                <igDP:FieldLayoutSettings AutoGenerateFields="True" 
+                                    AllowDelete="False" 
+                                    AllowAddNew="False"
+                                    FilterUIType="LabelIcons"/>
+            </igDP:XamDataGrid.FieldLayoutSettings>
+
+            <igDP:XamDataGrid.FieldSettings>
+                <igDP:FieldSettings AllowEdit="False" 
+                              AllowResize="True"
+                              AllowRecordFiltering="True"
+                              FilterLabelIconDropDownType="MultiSelectExcelStyle"/>
+            </igDP:XamDataGrid.FieldSettings>
+
+            <!--<igDP:XamDataGrid.FieldLayouts>
+                <igDP:FieldLayout>
+
+                    <igDP:DateTimeField BindingType="UseAlternateBinding" AlternateBinding="{Binding Date}" Label="Дата" Width="Auto"/>
+                    <igDP:NumericField BindingType="UseAlternateBinding" AlternateBinding="{Binding Quantity}" Label="Кол" Width="Auto"/>
+                    <igDP:NumericField BindingType="UseAlternateBinding" AlternateBinding="{Binding Price}" Label="Цена" Width="Auto"/>
+                    <igDP:NumericField BindingType="UseAlternateBinding" AlternateBinding="{Binding Payment}" Label="Платеж" Width="Auto"/>
+                    <igDP:TextField BindingType="UseAlternateBinding" AlternateBinding="{Binding Currency}" Label="Валюта" Width="Auto"/>
+                    <igDP:TextField BindingType="UseAlternateBinding" AlternateBinding="{Binding OperationType}" Label="Операция" Width="Auto"/>
+                    <igDP:TextField BindingType="UseAlternateBinding" AlternateBinding="{Binding Status}" Label="Статус" Width="Auto"/>
+                    <igDP:NumericField BindingType="UseAlternateBinding" AlternateBinding="{Binding Commission.Value}" Label="Комиссия" Width="Auto"/>
+
+                </igDP:FieldLayout>
+            </igDP:XamDataGrid.FieldLayouts>-->
+
+        </igDP:XamDataGrid>
+    </Grid>
+</mvvm:ViewBase>

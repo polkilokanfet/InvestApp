@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:ig="http://infragistics.com/DataPresenter">
 
-    <ig:XamDataGrid DataSource="{Binding Assets}">
+    <ig:XamDataGrid DataSource="{Binding Assets}"
+                    ActiveDataItem="{Binding ActiveAsset}">
 
         <ig:XamDataGrid.FieldLayoutSettings>
             <ig:FieldLayoutSettings AutoGenerateFields="False" 
@@ -14,17 +15,26 @@
 
         <ig:XamDataGrid.FieldSettings>
             <ig:FieldSettings AllowEdit="False" 
-                              AllowRecordFiltering="True"/>
+                              AllowResize="True"
+                              AllowRecordFiltering="True"
+                              FilterLabelIconDropDownType="MultiSelectExcelStyle"/>
         </ig:XamDataGrid.FieldSettings>
 
         <ig:XamDataGrid.FieldLayouts>
             <ig:FieldLayout>
 
+                <ig:TextField BindingType="UseAlternateBinding" AlternateBinding="{Binding Instrument.Type}" Label="Название" Width="Auto"/>
+                <ig:TextField BindingType="UseAlternateBinding" AlternateBinding="{Binding Instrument.Figi}" Label="FIGI" Width="Auto"/>
+                <ig:TextField BindingType="UseAlternateBinding" AlternateBinding="{Binding Instrument.Ticker}" Label="Тикер" Width="Auto"/>
                 <ig:TextField BindingType="UseAlternateBinding" AlternateBinding="{Binding Instrument.Name}" Label="Название"/>
                 <ig:TextField BindingType="UseAlternateBinding" AlternateBinding="{Binding Instrument.Currency}" Label="Валюта" Width="Auto"/>
                 <ig:NumericField BindingType="UseAlternateBinding" AlternateBinding="{Binding Shares}" Label="Кол." Width="Auto"/>
                 <ig:NumericField BindingType="UseAlternateBinding" AlternateBinding="{Binding PricePerShareBuy}" Label="Покупка" Width="Auto"/>
                 <ig:NumericField BindingType="UseAlternateBinding" AlternateBinding="{Binding PricePerShare}" Label="Текущая" Width="Auto"/>
+                <ig:NumericField BindingType="UseAlternateBinding" AlternateBinding="{Binding ProfitLoss}" Label="P/L" Width="Auto"/>
+                <ig:NumericField BindingType="UseAlternateBinding" AlternateBinding="{Binding ProfitLossDone}" Label="P/L р." Width="Auto"/>
+                <ig:NumericField BindingType="UseAlternateBinding" AlternateBinding="{Binding ProfitLossVirtual}" Label="P/L н.р." Width="Auto"/>
+                <ig:TextField BindingType="UseAlternateBinding" AlternateBinding="{Binding Exceptions}" Label="Ошибки обновления" Width="Auto"/>
 
             </ig:FieldLayout>
         </ig:XamDataGrid.FieldLayouts>

@@ -2,6 +2,6 @@
 {
     public interface IMessageService
     {
-        string GetMessage();
+        void ShowMessage(string message);
     }
 }

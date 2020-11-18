@@ -8,18 +8,18 @@ namespace InvestApp.Modules.ModuleName.Tests.ViewModels
 {
     public class ViewAViewModelFixture
     {
-        Mock<IMessageService> _messageServiceMock;
-        Mock<IRegionManager> _regionManagerMock;
-        const string MessageServiceDefaultMessage = "Some Value";
+        //Mock<IMessageService> _messageServiceMock;
+        //Mock<IRegionManager> _regionManagerMock;
+        //const string MessageServiceDefaultMessage = "Some Value";
 
-        public ViewAViewModelFixture()
-        {
-            var messageService = new Mock<IMessageService>();
-            messageService.Setup(x => x.GetMessage()).Returns(MessageServiceDefaultMessage);
-            _messageServiceMock = messageService;
+        //public ViewAViewModelFixture()
+        //{
+        //    //var messageService = new Mock<IMessageService>();
+        //    //messageService.Setup(x => x.ShowMessage()).Returns(MessageServiceDefaultMessage);
+        //    //_messageServiceMock = messageService;
 
-            _regionManagerMock = new Mock<IRegionManager>();
-        }
+        //    //_regionManagerMock = new Mock<IRegionManager>();
+        //}
 
         //[Fact]
         //public void MessagePropertyValueUpdated()

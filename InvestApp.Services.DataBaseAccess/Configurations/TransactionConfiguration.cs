@@ -9,7 +9,6 @@ namespace InvestApp.Services.DataBaseAccess.Configurations
         public void Configure(EntityTypeBuilder<Transaction> builder)
         {
             builder.HasOne(transaction => transaction.Instrument).WithMany();
-            builder.HasOne(transaction => transaction.Price);
             builder.HasOne(transaction => transaction.Commission);
 
             builder.Property(transaction => transaction.Quantity).IsRequired();

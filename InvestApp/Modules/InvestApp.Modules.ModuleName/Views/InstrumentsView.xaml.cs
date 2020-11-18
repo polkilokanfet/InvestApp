@@ -7,9 +7,9 @@ using Prism.Regions;
 namespace InvestApp.Modules.ModuleName.Views
 {
     [RibbonTab(typeof(ViewATab))]
-    public partial class ViewA : ViewBase
+    public partial class InstrumentsView : ViewBase
     {
-        public ViewA(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
+        public InstrumentsView(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
             InitializeComponent();
         }
