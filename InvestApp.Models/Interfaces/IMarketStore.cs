@@ -50,8 +50,25 @@ namespace InvestApp.Domain.Interfaces
         /// <returns></returns>
         Task<decimal> GetRubExchangeRate(Currency currency, DateTime moment = default);
 
+        /// <summary>
+        /// Вернуть профиль компании
+        /// </summary>
+        /// <param name="symbol"></param>
+        /// <returns></returns>
         Task<CompanyProfile> GetCompanyProfileAsync(string symbol);
 
+        /// <summary>
+        /// Финансовые показатели компании
+        /// </summary>
+        /// <param name="company"></param>
+        /// <returns></returns>
         Task<List<FinancialRatio>> GetFinancialRatiosAsync(CompanyProfile company);
+
+        /// <summary>
+        /// Обновить рейтинг компании
+        /// </summary>
+        /// <param name="company"></param>
+        /// <returns></returns>
+        Task<CompanyRaiting> GetCompanyRaitingAsync(CompanyProfile company);
     }
 }

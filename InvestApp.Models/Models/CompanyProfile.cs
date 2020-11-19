@@ -19,8 +19,9 @@ namespace InvestApp.Domain.Models
         public Country Country { get; set; }
         public string Website { get; set; }
         public string Image { get; set; }
-        public DateTime IpoDate { get; set; }
+        public DateTime? IpoDate { get; set; }
 
-        public List<FinancialRatio> FinancialRatios { get; set; } = new List<FinancialRatio>();
+        public List<CompanyRaiting> CompanyRaitings { get; set; }
+        public List<FinancialRatio> FinancialRatios { get; set; }
     }
 }

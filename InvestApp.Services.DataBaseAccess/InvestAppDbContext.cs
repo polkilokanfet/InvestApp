@@ -14,6 +14,10 @@ namespace InvestApp.Services.DataBaseAccess
         public DbSet<Industry> Industries { get; set; }
         public DbSet<Sector> Sectors { get; set; }
         public DbSet<FinancialRatio> FinancialRatios { get; set; }
+        public DbSet<CompanyRaiting> CompanyRaitings { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
+        public DbSet<RatingRecommendation> RatingRecommendations { get; set; }
+        public DbSet<FinancialModelingServiceInvalidSymbols> FinancialModelingServiceInvalidSymbols { get; set; }
 
         public InvestAppDbContext()
         {

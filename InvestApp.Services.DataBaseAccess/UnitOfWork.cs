@@ -20,6 +20,11 @@ namespace InvestApp.Services.DataBaseAccess
         private readonly IRepository<Industry> _repositoryIndustries;
         private readonly IRepository<Sector> _repositorySectors;
         private readonly IRepository<FinancialRatio> _repositoryFinancialRatios;
+        private readonly IRepository<FinancialModelingServiceInvalidSymbols> _repositoryFinancialModelingServiceInvalidSymbols;
+        private readonly IRepository<CompanyRaiting> _repositoryCompanyRaitings;
+        private readonly IRepository<Rating> _repositoryRatings;
+        private readonly IRepository<RatingRecommendation> _repositoryRatingRecommendations;
+
 
         public UnitOfWork(DbContext context)
         {
@@ -31,8 +36,12 @@ namespace InvestApp.Services.DataBaseAccess
             _repositoryExchanges = new BaseRepository<Exchange>(context);
             _repositoryIndustries = new BaseRepository<Industry>(context);
             _repositorySectors = new BaseRepository<Sector>(context);
-            _repositoryCompanyProfiles = new BaseRepository<CompanyProfile>(context);
+            _repositoryCompanyProfiles = new RepositoryCompanyProfiles(context);
             _repositoryFinancialRatios = new BaseRepository<FinancialRatio>(context);
+            _repositoryFinancialModelingServiceInvalidSymbols = new BaseRepository<FinancialModelingServiceInvalidSymbols>(context);
+            _repositoryCompanyRaitings = new BaseRepository<CompanyRaiting>(context);
+            _repositoryRatings = new BaseRepository<Rating>(context);
+            _repositoryRatingRecommendations = new BaseRepository<RatingRecommendation>(context);
         }
 
         public IRepository<T> Repository<T>() where T : class, IBaseEntity

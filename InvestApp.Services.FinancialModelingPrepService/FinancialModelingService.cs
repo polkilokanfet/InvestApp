@@ -66,6 +66,20 @@ namespace InvestApp.Services.FinancialModelingPrepService
             }
         }
 
+        public async Task<CompanyRaitingFinMod> GetCompanyRaitingAsync(string symbol)
+        {
+            using (FinancialModelingHttpClient client = _httpClientFactory.CreateHttpClient())
+            {
+                string uri = $"rating/{symbol}";
+                List<CompanyRaitingFinMod> ratings = await client.GetAsync<List<CompanyRaitingFinMod>>(uri);
+                if (!ratings.Any())
+                {
+                    throw new InvalidSymbolException(symbol);
+                }
+                return ratings.First();
+            }
+        }
+
         #region GetMajorIndex
 
         public async Task<MajorIndex> GetMajorIndexAsync(MajorIndexType indexType)

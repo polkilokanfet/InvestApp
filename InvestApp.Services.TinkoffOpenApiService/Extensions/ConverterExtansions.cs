@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using InvestApp.Domain.Models;
+using InvestApp.Domain.Models.FinMod;
+using InvestApp.Domain.Services.DataBaseAccess;
 using InvestApp.Services.TinkoffOpenApiService.Models;
 
 namespace InvestApp.Services.TinkoffOpenApiService.Extensions
@@ -10,7 +12,7 @@ namespace InvestApp.Services.TinkoffOpenApiService.Extensions
         {
             return moneyAmount == null
                 ? null
-                : new MoneySum()
+                : new MoneySum
                 {
                     Currency = moneyAmount.Currency,
                     Value = moneyAmount.Value
@@ -33,7 +35,6 @@ namespace InvestApp.Services.TinkoffOpenApiService.Extensions
                 Type = marketInstrument.Type,
                 Currency = marketInstrument.Currency
             };
-
         }
 
         public static Transaction ToTransaction(this Operation operation, Instrument instrument)
@@ -53,6 +54,27 @@ namespace InvestApp.Services.TinkoffOpenApiService.Extensions
                 Instrument = instrument
             };
 
+        }
+
+        public static CompanyProfile ToCompanyProfile(this CompanyProfileFinMod companyProfileFinMod, IUnitOfWork unitOfWork)
+        {
+            return new CompanyProfile
+            {
+                Cik = companyProfileFinMod.Cik,
+                Cusip = companyProfileFinMod.Cusip,
+                Currency = companyProfileFinMod.Currency,
+                CompanyName = companyProfileFinMod.CompanyName,
+                Description = companyProfileFinMod.Description,
+                Country = unitOfWork.Repository<Country>().Find(country => country.Name == companyProfileFinMod.Country).SingleOrDefault() ?? new Country { Name = companyProfileFinMod.Country },
+                Exchange = unitOfWork.Repository<Exchange>().Find(exchange => exchange.ShortName == companyProfileFinMod.ExchangeShortName).SingleOrDefault() ?? new Exchange { ShortName = companyProfileFinMod.ExchangeShortName, FullName = companyProfileFinMod.Exchange },
+                Industry = unitOfWork.Repository<Industry>().Find(industry => industry.Name == companyProfileFinMod.Industry).SingleOrDefault() ?? new Industry { Name = companyProfileFinMod.Industry },
+                Sector = unitOfWork.Repository<Sector>().Find(sector => sector.Name == companyProfileFinMod.Sector).SingleOrDefault() ?? new Sector { Name = companyProfileFinMod.Sector },
+                Image = companyProfileFinMod.Image,
+                IpoDate = companyProfileFinMod.IpoDate,
+                Isin = companyProfileFinMod.Isin,
+                Symbol = companyProfileFinMod.Symbol,
+                Website = companyProfileFinMod.Website
+            };
         }
     }
 }

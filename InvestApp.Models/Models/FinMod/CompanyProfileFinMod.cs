@@ -18,6 +18,6 @@ namespace InvestApp.Domain.Models.FinMod
         public string Country { get; set; }
         public string Website { get; set; }
         public string Image { get; set; }
-        public DateTime IpoDate { get; set; }
+        public DateTime? IpoDate { get; set; }
     }
 }

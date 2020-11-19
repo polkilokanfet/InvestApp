@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InvestApp.Domain.Exceptions;
 using InvestApp.Domain.Interfaces;
 using InvestApp.Domain.Models;
 using InvestApp.Domain.Models.FinMod;
@@ -190,64 +191,116 @@ namespace InvestApp.Services.TinkoffOpenApiService
         /// <returns></returns>
         private async Task<decimal> GetPriceByOrderbook(string figi)
         {
-            //try
-            //{
             var orderBook = await _context.MarketOrderbookAsync(figi, 1);
             return orderBook.LastPrice;
-            //}
-            //catch (OpenApiException e)
-            //{
-            //    Console.WriteLine(e);
-            //}
-
-            //return 0;
-        }
-
-        public async Task SellPositionAsync(string figi, int lots)
-        {
-            MarketOrder marketOrder = new MarketOrder(figi, lots, OperationType.Sell);
-            await _context.PlaceMarketOrderAsync(marketOrder);
         }
 
         public async Task<CompanyProfile> GetCompanyProfileAsync(string symbol)
         {
             //по возможности возвращаем сохраненный профиль
-            CompanyProfile companyProfile = _unitOfWork
-                .Repository<CompanyProfile>()
-                .Find(profile => profile.Symbol == symbol)
-                .FirstOrDefault();
-            if (companyProfile != null) return companyProfile;
+            CompanyProfile companyProfile = _unitOfWork.Repository<CompanyProfile>().Find(profile => profile.Symbol == symbol).SingleOrDefault();
+            if (companyProfile != null) 
+                return companyProfile;
+
+            //если символов нет в сервисе
+            if (_unitOfWork.Repository<FinancialModelingServiceInvalidSymbols>().Find(x => x.InvalidSymbols == symbol).Any())
+                throw new NotImplementedException();
 
             //загружаем профиль из сервиса
-            CompanyProfileFinMod companyProfileFinMod = await _financialModelingPrepService.GetCompanyProfileAsync(symbol);
-            companyProfile = new CompanyProfile
+            try
             {
-                Cik = companyProfileFinMod.Cik, 
-                Cusip = companyProfileFinMod.Cusip, 
-                Currency = companyProfileFinMod.Currency, 
-                CompanyName = companyProfileFinMod.CompanyName, 
-                Description = companyProfileFinMod.Description, 
-                Country = _unitOfWork.Repository<Country>().Find(country => country.Name == companyProfileFinMod.Country).SingleOrDefault() ?? new Country {Name = companyProfileFinMod.Country}, 
-                Exchange = _unitOfWork.Repository<Exchange>().Find(exchange => exchange.ShortName == companyProfileFinMod.ExchangeShortName).SingleOrDefault() ?? new Exchange { ShortName = companyProfileFinMod.ExchangeShortName, FullName = companyProfileFinMod.Exchange }, 
-                Industry = _unitOfWork.Repository<Industry>().Find(industry => industry.Name == companyProfileFinMod.Industry).SingleOrDefault() ?? new Industry { Name = companyProfileFinMod.Industry },
-                Sector = _unitOfWork.Repository<Sector>().Find(sector => sector.Name == companyProfileFinMod.Sector).SingleOrDefault() ?? new Sector { Name = companyProfileFinMod.Sector },
-                Image = companyProfileFinMod.Image, 
-                IpoDate = companyProfileFinMod.IpoDate, 
-                Isin = companyProfileFinMod.Isin, 
-                Symbol = companyProfileFinMod.Symbol, 
-                Website = companyProfileFinMod.Website
-            };
-            companyProfile.FinancialRatios = await GetFinancialRatiosAsync(companyProfile);
-            _unitOfWork.Repository<CompanyProfile>().Add(companyProfile);
-            _unitOfWork.SaveChanges();
+                CompanyProfileFinMod companyProfileFinMod = await _financialModelingPrepService.GetCompanyProfileAsync(symbol);
+                companyProfile = companyProfileFinMod.ToCompanyProfile(_unitOfWork);
+                _unitOfWork.Repository<CompanyProfile>().Add(companyProfile);
 
-            return companyProfile;
+                //финансовые показатели
+                try
+                {
+                    companyProfile.FinancialRatios = await GetFinancialRatiosAsync(companyProfile);
+                }
+                catch
+                {
+                    // ignored
+                }
+
+                //рейтинг компании
+                try
+                {
+                    CompanyRaiting companyRaiting = await GetCompanyRaitingAsync(companyProfile);
+                    _unitOfWork.Repository<CompanyRaiting>().Add(companyRaiting);
+                    companyProfile.CompanyRaitings = new List<CompanyRaiting> { companyRaiting };
+                }
+                catch
+                {
+                    // ignored
+                }
+
+                _unitOfWork.SaveChanges();
+                return companyProfile;
+            }
+            catch (InvalidSymbolException)
+            {
+                //добавляем тикер в список отсутствующих в сервисе тикеров
+                _unitOfWork.Repository<FinancialModelingServiceInvalidSymbols>().Add(new FinancialModelingServiceInvalidSymbols { InvalidSymbols = symbol });
+                _unitOfWork.SaveChanges();
+                throw;
+            }
         }
 
         public async Task<List<FinancialRatio>> GetFinancialRatiosAsync(CompanyProfile company)
         {
-            var result = await _financialModelingPrepService.GetFinancialRatiosAsync(company.Symbol);
-            return result;
+            return await _financialModelingPrepService.GetFinancialRatiosAsync(company.Symbol);
         }
+
+        #region GetCompanyRaiting
+
+        public async Task<CompanyRaiting> GetCompanyRaitingAsync(CompanyProfile company)
+        {
+            CompanyRaitingFinMod raitingFinMod = await _financialModelingPrepService.GetCompanyRaitingAsync(company.Symbol);
+            CompanyRaiting companyRaiting = new CompanyRaiting
+            {
+                Date = raitingFinMod.Date,
+                Symbol = raitingFinMod.Symbol,
+                Rating = _unitOfWork.Repository<Rating>().Find(rating => rating.Name == raitingFinMod.Rating).SingleOrDefault() ?? new Rating {Name = raitingFinMod.Rating},
+                RatingRecommendation = GetRatingRecommendation(raitingFinMod.RatingRecommendation),
+                RatingScore = raitingFinMod.RatingScore,
+                RatingDetailsDCFRecommendation = GetRatingRecommendation(raitingFinMod.RatingDetailsDCFRecommendation),
+                RatingDetailsDCFScore = raitingFinMod.RatingDetailsDCFScore,
+                RatingDetailsDERecommendation = GetRatingRecommendation(raitingFinMod.RatingDetailsDERecommendation),
+                RatingDetailsDEScore = raitingFinMod.RatingDetailsDEScore,
+                RatingDetailsPBRecommendation = GetRatingRecommendation(raitingFinMod.RatingDetailsPBRecommendation),
+                RatingDetailsPBScore = raitingFinMod.RatingDetailsPBScore,
+                RatingDetailsPERecommendation = GetRatingRecommendation(raitingFinMod.RatingDetailsPERecommendation),
+                RatingDetailsPEScore = raitingFinMod.RatingDetailsPEScore,
+                RatingDetailsROARecommendation = GetRatingRecommendation(raitingFinMod.RatingDetailsROARecommendation),
+                RatingDetailsROAScore = raitingFinMod.RatingDetailsROAScore,
+                RatingDetailsROERecommendation = GetRatingRecommendation(raitingFinMod.RatingDetailsROERecommendation),
+                RatingDetailsROEScore = raitingFinMod.RatingDetailsROEScore
+            };
+            return companyRaiting;
+        }
+
+        private static Dictionary<string, RatingRecommendation> _ratingRecommendations;
+        private RatingRecommendation GetRatingRecommendation(string name)
+        {
+            if (_ratingRecommendations == null)
+            {
+                _ratingRecommendations = new Dictionary<string, RatingRecommendation>();
+                foreach (RatingRecommendation ratingRecommendation in _unitOfWork.Repository<RatingRecommendation>().GetAll())
+                {
+                    _ratingRecommendations.Add(ratingRecommendation.Name, ratingRecommendation);
+                }
+            }
+
+            if (!_ratingRecommendations.ContainsKey(name))
+            {
+                _ratingRecommendations.Add(name, new RatingRecommendation { Name = name } );
+                _unitOfWork.Repository<RatingRecommendation>().Add(_ratingRecommendations[name]);
+            }
+
+            return _ratingRecommendations[name];
+        }
+
+        #endregion
     }
 }

@@ -21,5 +21,6 @@ namespace InvestApp.Domain.Services
         Task<List<StockListItem>> GetStockListAsync();
         Task<CompanyProfileFinMod> GetCompanyProfileAsync(string symbol);
         Task<List<FinancialRatio>> GetFinancialRatiosAsync(string symbol);
+        Task<CompanyRaitingFinMod> GetCompanyRaitingAsync(string symbol);
     }
 }
